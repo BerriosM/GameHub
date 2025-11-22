@@ -10,5 +10,4 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('game-single/', views.game_single, name='game_single'),
     path('signup/', views.SignUpView.as_view(), name='signup'),
-    path('rawg/games/', views.rawg_games, name='rawg_games'),
 ]
