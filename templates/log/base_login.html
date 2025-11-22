@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{% static 'img/favicon.png' %}">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <title>Ingrese credenciales</title>
+</head>
+
+<body style="background-color: #111f2d;">
+  <video autoplay muted loop id="bg-video" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;">
+    <source src="{% static 'videos/signcall.mp4' %}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div>
+    {% block contenido %}
+    {% endblock %}
+  </div>
+</body>
+
+</html>

@@ -58,7 +58,13 @@
 				</a>
 				<nav class="top-nav-area w-100">
 					<div class="user-panel">
-						<a href="">Login</a> / <a href="">Register</a>
+						<a href="{% url 'login' %}" class="user-icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="white"
+								stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="16" cy="12" r="6"></circle>
+								<path d="M4 28c0-6 8-10 12-10s12 4 12 10"></path>
+							</svg>
+						</a>
 					</div>
 					<!-- Menu -->
 					<ul class="main-menu primary-menu">
