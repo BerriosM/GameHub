@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main, name='main'),
     path('games/', games, name='games'),
+    path('games/add/', AddGameView.as_view(), name='games_add'),
     path('review/', review, name='review'),
     path('blog/', blog, name='blog'),
     path('contact/', contact, name='contact'),

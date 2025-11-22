@@ -3,9 +3,10 @@
 {% block contenido %}
     <form method="POST">
         {% csrf_token %}
-        <h2>GameLoot - Login</h2>
+        <h2>Iniciar sesion</h2>
         <input type="text" name="username" placeholder="Username" required><br>
         <input type="password" name="password" placeholder="Password" required><br>
+        <p class="text">olvido su contraseña</p>
         <input type="submit" value="Login">
         
         {% if error %}

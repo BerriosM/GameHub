@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views.generic.edit import CreateView as GenericCreateView
+
+from .models import Game
+from .forms import GameForm
 
 
 # Login
@@ -9,6 +13,14 @@ class SignUpView(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     template_name = "registration/signup.html"
+
+
+# Add game view
+class AddGameView(GenericCreateView):
+    model = Game
+    form_class = GameForm
+    template_name = "add_game.html"
+    success_url = reverse_lazy('games')
 
 # Create your views here.
 def main(request):
