@@ -27,7 +27,8 @@ def main(request):
     return render(request, 'index.html')
 
 def games(request):
-    return render(request, 'games.html')
+    games = Game.objects.order_by('-created_at')
+    return render(request, 'games.html', {'games': games})
 
 def review(request):
     return render(request, 'review.html')

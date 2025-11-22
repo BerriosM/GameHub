@@ -7,7 +7,6 @@ class Game(models.Model):
 	platform = models.CharField(max_length=100, blank=True)
 	genre = models.CharField(max_length=100, blank=True)
 	description = models.TextField(blank=True)
-	image = models.CharField(max_length=255, blank=True, help_text="Ruta relativa a static/img/games/")
 
 	created_at = models.DateTimeField(auto_now_add=True)
 
