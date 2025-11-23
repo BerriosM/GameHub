@@ -70,9 +70,6 @@
 					<ul class="main-menu primary-menu">
 						<li><a href="{% url 'main' %}">Inicio</a></li>
 						<li><a href="{% url 'games' %}">Juegos</a>
-							<ul class="sub-menu">
-								<li><a href="{% url 'game_single' %}">Game Single</a></li>
-							</ul>
 						</li>
 						<li><a href="{% url 'review' %}">Reseñas</a></li>
 						<li><a href="{% url 'blog' %}">Noticias</a></li>
@@ -114,11 +111,11 @@
 				<img src="{% static './img/logo.png' %}" alt="">
 			</a>
 			<ul class="main-menu footer-menu">
-				<li><a href="">Inicio</a></li>
+				<li><a href="{% url 'main' %}">Inicio</a></li>
 				<li><a href="{% url 'games' %}">Juegos</a></li>
-				<li><a href="">Reseñas</a></li>
-				<li><a href="">Noticias</a></li>
-				<li><a href="">Contacto</a></li>
+				<li><a href="{% url 'review' %}">Reseñas</a></li>
+				<li><a href="{% url 'blog' %}">Noticias</a></li>
+				<li><a href="{% url 'contact' %}">Contacto</a></li>
 			</ul>
 			<div class="footer-social d-flex justify-content-center">
 				<a href="#"><i class="fa fa-pinterest"></i></a>

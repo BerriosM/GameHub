@@ -5,14 +5,13 @@
 {% block contenido %}
 
 
-
 	<!-- Page top section -->
-	<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/1.jpg' %}">
+	<section class="page-top-section set-bg" data-setbg="{% if game.image %}{% static 'img/games/' %}{{ game.image }}{% else %}{% static 'img/page-top-bg/1.jpg' %}{% endif %}">
 		<div class="page-info">
-			<h2>Juegos</h2>
+			<h2>{% if game.title %}{{ game.title }}{% else %}Juego{% endif %}</h2>
 			<div class="site-breadcrumb">
-				<a href="">Inicio</a> /
-				<span>Juegos</span>
+				<a href="{% url 'main' %}">Inicio</a> /
+				<span>{% if game.title %}{{ game.title }}{% else %}Juegos{% endif %}</span>
 			</div>
 		</div>
 	</section>
@@ -23,33 +22,25 @@
 	<section class="games-single-page">
 		<div class="container">
 			<div class="game-single-preview">
-				<img src="{% static 'img/games/big.jpg' %}" alt="">
+				{% if game.image %}
+				<img alt="{{ game.title }}" style="width:100%;height:420px;object-fit:cover;" src="{% static 'img/games/' %}{{ game.image }}">
+				{% else %}
+				<img src="{% static 'img/games/no-image.svg' %}" alt="{{ game.title }}">
+				{% endif %}
 			</div>
 			<div class="row">
 				<div class="col-xl-9 col-lg-8 col-md-7 game-single-content">
-					<div class="gs-meta">11.11.18 / in <a href="">Juegos</a></div>
-					<h2 class="gs-title">Final Appocalipse 2.1</h2>
-					<h4>Gameplay</h4>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Ipsum dolor sit amet,
-						consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-						aliquamet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-						magna aliqua. Vestibulum posuere porttitor justo id pellentesque. Proin id lacus feugiat,
-						posuere erat sit amet, commodo ipsum. Donec pellentesque vestibulum metus.</p>
+					<div class="gs-meta">{% if game.created_at %}{{ game.created_at|date:"d.m.Y" }}{% else %}--/--/----{% endif %} / in <a href="#">Juegos</a></div>
+					<h2 class="gs-title">{% if game.title %}{{ game.title }}{% else %}Juego{% endif %}</h2>
+					<div class="game-meta-options" style="margin-bottom:10px; color: white;">
+						<span style="display:inline-block;margin-right:12px;"><strong>Plataforma:</strong> {% if game.platform %}{{ game.platform }}{% else %}N/A{% endif %}</span>
+						<span style="display:inline-block;"><strong>Género:</strong> {% if game.genre %}{{ game.genre }}{% else %}N/A{% endif %}</span>
+					</div>
+					<h4 style="margin-top: 50px;" >Gameplay</h4>
+					<p>{% if game.description %}{{ game.description }}{% else %}N/A{% endif %}</p>
 					<h4>Conclusion</h4>
-					<p>Nulla ut maximus mauris. Sed malesuada at sapien sed euismod. Vestibulum pharetra in sem id
-						laoreet. Cras metus ex, placerat nec justo quis, luctus posuere ex. Vivamus volutpat nibh ac
-						sollicitudin imperdiet. Donec scelerisque lorem sodales odio ultricies, nec rhoncus ex lobortis.
-						Vivamus tincidunt sit amet sem id varius. Donec ele-mentum aliquet tortor. Curabitur justo mi,
-						efficitur sed eros aliquet, dictum molestie eros. Nullam scelerisque convallis gravida. Morbi id
-						lorem accumsan, scelerisque enim laoreet, sollicitudin neque. Vivamus volutpat nibh ac
-						sollicitudin imperdiet. Donec scelerisque lorem sodales odio ultricies, nec rhoncus ex lobortis.
-						Vivamus tincidunt sit amet sem id varius. Donec ele-mentum aliquet tortor. Curabitur justo mi,
-						efficitur sed eros aliqueDonec vitae tellus sodales, congue augue at, biben-dum justo.
-						Pellentesque non dolor et magna volutpat pharetra eget vel ligula. Maecenas facilisis vestibulum
-						mattis. Sed sagittis gravida urna. Cras nec mi risus.
-					</p>
-					<div class="geme-social-share pt-5 d-flex">
+					<p>{% if game.long_description %}{{ game.long_description }}{% else %}N/A{% endif %}</p>
+					<div class="geme-social-share pt-4 d-flex">
 						<p>Share:</p>
 						<a href="#"><i class="fa fa-pinterest"></i></a>
 						<a href="#"><i class="fa fa-facebook"></i></a>
@@ -57,50 +48,67 @@
 						<a href="#"><i class="fa fa-dribbble"></i></a>
 						<a href="#"><i class="fa fa-behance"></i></a>
 					</div>
+
+					<!-- Reviews for this game -->
+					<div class="mt-5">
+						<h4>Tus Reseñas</h4>
+						{% if reviews %}
+						{% for r in reviews %}
+						<div class="review-item" style="background:transparent;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+							<div class="row">
+								<div class="col-lg-2">
+									<div class="review-pic">
+										<img src="{% if r.image %}{% static r.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="" style="width:100%;height:60px;object-fit:cover;">
+									</div>
+								</div>
+								<div class="col-lg-10">
+									<div class="review-content text-white">
+										<div class="rating"><span>{{ r.rating }}</span> / 5</div>
+										<h5>{{ r.title }}</h5>
+										<p>{{ r.excerpt|default:r.content|truncatechars:200 }}</p>
+										<div class="top-meta">{{ r.created_at|date:"d.m.Y" }} / por <strong>{{ r.author_name|default:"Anónimo" }}</strong></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+						{% else %}
+						<p>No hay reseñas aún. <a href="{% url 'review_add' %}">Agrega la primera reseña</a>.</p>
+						{% endif %}
+					</div>
 				</div>
 				<div class="col-xl-3 col-lg-4 col-md-5 sidebar game-page-sideber">
 					<div id="stickySidebar">
+						<a href="{% url 'review_add' %}" class="btn btn-primary" style="margin:10px 0; display:block;">Agregar reseña</a>
 						<div class="widget-item">
 							<div class="rating-widget">
 								<h4 class="widget-title">Ratings</h4>
 								<ul>
-									<li>Price<span>3.5/5</span></li>
-									<li>Graphics<span>4.5/5</span></li>
-									<li>Levels<span>3.5/5</span></li>
-									<li>Levels<span>4.5/5</span></li>
-									<li>Dificulty<span>4.5/5</span></li>
+									<li>Price<span>{% if game.price_rating %}{{ game.price_rating }} / 5{% else %}N/A{% endif %}</span></li>
+									<li>Graphics<span>{% if game.graphics_rating %}{{ game.graphics_rating }} / 5{% else %}N/A{% endif %}</span></li>
+									<li>Levels<span>{% if game.levels_rating %}{{ game.levels_rating }} / 5{% else %}N/A{% endif %}</span></li>
+									<li>Dificulty<span>{% if game.difficulty_rating %}{{ game.difficulty_rating }} / 5{% else %}N/A{% endif %}</span></li>
 								</ul>
 								<div class="rating">
-									<h5><i>Rating</i><span>4.5</span> / 5</h5>
+									<h5><i>Rating</i><span>{% if average_rating %}{{ average_rating }}{% elif game.rating %}{{ game.rating }}{% else %}N/A{% endif %}</span>{% if average_rating or game.rating %} / 5{% endif %}</h5>
 								</div>
 							</div>
 						</div>
 						<div class="widget-item">
 							<div class="testimonials-widget">
-								<h4 class="widget-title">Testimonials</h4>
+								<h4 class="widget-title">Última reseña</h4>
+								{% if reviews %}
 								<div class="testim-text">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-										incididunt ut labore et dolo re magna aliqua. Quis ipsum suspend isse ultrices.
-									</p>
-									<h6><span>James Smith,</span>Gamer</h6>
+									<p>{{ reviews.0.excerpt|default:reviews.0.content|truncatechars:120 }}</p>
+									<h6><span>{{ reviews.0.author_name|default:"Anónimo" }},</span> Usuario</h6>
 								</div>
+								{% else %}
+								<p>No hay comentarios aún.</p>
+								{% endif %}
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Games end-->
-
-	<section class="game-author-section">
-		<div class="container">
-			<div class="game-author-pic set-bg" data-setbg="{% static 'img/author.jpg' %}"></div>
-			<div class="game-author-info">
-				<h4>Written by: Michael Williams</h4>
-				<p>Vivamus volutpat nibh ac sollicitudin imperdiet. Donec scelerisque lorem sodales odio ultricies, nec
-					rhoncus ex lobortis. Vivamus tincid-unt sit amet sem id varius. Donec elementum aliquet tortor.
-					Curabitur justo mi, efficitur sed eros alique.</p>
 			</div>
 		</div>
 	</section>
