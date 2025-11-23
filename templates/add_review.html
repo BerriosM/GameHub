@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/2.jpg' %}">
+    <div class="page-info">
+        <h2>Agregar Reseña</h2>
+        <div class="site-breadcrumb">
+            <a href="">Inicio</a> /
+            <a href="{% url 'review' %}">Reseñas</a> /
+            <span>Agregar</span>
+        </div>
+    </div>
+</section>
+
+<section class="review-section">
+    <div class="container">
+        <div class="card" style="padding:20px;">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                <div class="form-group">
+                    {{ form.game.label_tag }}
+                    {{ form.game }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.title.label_tag }}
+                    {{ form.title }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.rating.label_tag }}
+                    {{ form.rating }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.image.label_tag }}
+                    {{ form.image }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.excerpt.label_tag }}
+                    {{ form.excerpt }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.content.label_tag }}
+                    {{ form.content }}
+                </div>
+
+                <button type="submit" class="btn btn-success">Guardar reseña</button>
+                <a href="{% url 'review' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

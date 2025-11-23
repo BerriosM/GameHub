@@ -17,16 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from GameHubApp.views import *
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', main, name='main'),
-    path('games/', games, name='games'),
-    path('review/', review, name='review'),
-    path('blog/', blog, name='blog'),
-    path('contact/', contact, name='contact'),
-    path('game-single/', game_single, name='game_single'),
-    # Include Django's built-in authentication URLs (login, logout, password management)
+    path('', include('GameHubApp.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

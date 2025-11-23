@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/1.jpg' %}">
+    <div class="page-info">
+        <h2>Agregar Juego</h2>
+        <div class="site-breadcrumb">
+            <a href="{% url 'main' %}">Inicio</a> /
+            <span>Agregar Juego</span>
+        </div>
+    </div>
+</section>
+
+<section class="games-section spad">
+    <div class="container">
+        <div class="widget-item">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
+                    {% for error in field.errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="site-btn">Agregar juego</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

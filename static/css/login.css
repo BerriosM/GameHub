@@ -24,14 +24,18 @@
         background: rgba(0, 0, 0, 0.6);
         padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
         width: 300px;
-        text-align: center;
         animation: fadeInZoom 1s ease-in-out;  /* Animation for form appearance */
     }
 
     h2 {
         margin-bottom: 20px;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .text {
         color: #ffffff;
     }
 
@@ -43,19 +47,19 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 16px;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(250, 250, 250, 0.1);
         color: white;
         transition: all 0.3s ease;
     }
 
     input[type="text"]:focus,
     input[type="password"]:focus {
-        border-color: #3498db;
+        border-color: #7f2288;
         outline: none;
     }
 
     input[type="submit"] {
-        background-color: #3498db;
+        background-color: #7f2288;
         color: white;
         padding: 12px 20px;
         border: none;
@@ -68,7 +72,7 @@
     }
 
     input[type="submit"]:hover {
-        background-color: #2980b9;
+        background-color: #7f2288;
         transform: scale(1.05);  /* Slight zoom on hover */
     }
 

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/3.jpg' %}">
+    <div class="page-info">
+        <h2>Agregar Noticia</h2>
+        <div class="site-breadcrumb">
+            <a href="">Inicio</a> /
+            <a href="{% url 'blog' %}">Blog</a> /
+            <span>Agregar</span>
+        </div>
+    </div>
+</section>
+
+<section class="blog-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card" style="padding:20px;">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-group">
+                            {{ form.title.label_tag }}
+                            {{ form.title }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.category.label_tag }}
+                            {{ form.category }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.image.label_tag }}
+                            {{ form.image }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.excerpt.label_tag }}
+                            {{ form.excerpt }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.content.label_tag }}
+                            {{ form.content }}
+                        </div>
+                        <button type="submit" class="btn btn-success">Guardar noticia</button>
+                        <a href="{% url 'blog' %}" class="btn btn-secondary">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
