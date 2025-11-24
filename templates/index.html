@@ -55,7 +55,7 @@
 								<div class="top-meta">{{ post.created_at|date:"d.m.Y" }} / in <a href="">{{ post.category }}</a></div>
 								<h3>{{ post.title }}</h3>
 								<p>{{ post.excerpt|default:post.content|truncatechars:150 }}</p>
-								<a href="{% url 'post_detail' post.pk %}" class="read-more">Read More <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
+								<a href="#" class="read-more">Ver mas <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
 							</div>
 						</div>
 						{% endfor %}
@@ -118,7 +118,7 @@
 					adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vestibulum
 					posuere porttitor justo id pellentesque. Proin id lacus feugiat, posuere erat sit amet, commodo
 					ipsum. Donec pellentesque vestibulum metus...</p>
-				<a href="#" class="read-more">Read More <img src="{% static 'img/icons/double-arrow.png' %}"
+				<a href="#" class="read-more">Ver mas <img src="{% static 'img/icons/double-arrow.png' %}"
 						alt="#" /></a>
 			</div>
 		</div>
