@@ -15,10 +15,6 @@
 	</div>
 </section>
 
-
-
-
-
 <section class="games-section">
 	<div class="container">
 		<ul class="game-filter">
@@ -64,8 +60,7 @@
 								src="{% static 'img/games/no-image.svg' %}" 
 							{% endif %}>
 							<h5>{{ game.title }}</h5>
-							    <a href="{% url 'game_single' game.id %}" class="read-more">Ver mas <img
-								    src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
+							    <a href="{% url 'game_single' game.id %}" class="read-more">Ver mas <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
 						</div>
 					</div>
 					{% empty %}

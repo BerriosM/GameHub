@@ -4,61 +4,96 @@
 
 {% block contenido %}
 
-<section class="page-top-section set-bg" data-setbg="{% if post.image %}{% static post.image %}{% else %}{% static 'img/page-top-bg/3.jpg' %}{% endif %}">
+
+<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/3.jpg' %}">
 	<div class="page-info">
-		<h2>{{ post.title }}</h2>
+		<h2>Blog</h2>
 		<div class="site-breadcrumb">
-			<a href="{% url 'main' %}">Inicio</a> /
-			<span>{{ post.title }}</span>
+			<a href="">Inicio</a> /
+			<span>Blog</span>
 		</div>
 	</div>
 </section>
 
-<section class="blog-single-page">
+<!-- News detail section -->
+<section class="blog-page" style="padding:40px 0;">
 	<div class="container">
 		<div class="row">
 			<div class="col-xl-9 col-lg-8 col-md-7">
-				<div class="blog-single-preview">
-					{% if post.image %}
-					<img alt="{{ post.title }}" style="width:100%;height:420px;object-fit:cover;" src="{% static post.image %}">
-					{% else %}
-					<img src="{% static 'img/blog-big/1.jpg' %}" alt="{{ post.title }}">
-					{% endif %}
-				</div>
-				<div class="blog-meta">{{ post.created_at|date:"d.m.Y" }} / in <a href="#">{{ post.category }}</a></div>
-				<h2 class="blog-title">{{ post.title }}</h2>
-				<p>{{ post.content|linebreaks }}</p>
-
-				<!-- Comments -->
-				<div class="mt-5">
-					<h4>Comentarios</h4>
+				<div class="big-blog-item">
+					<img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="#" class="blog-thumbnail" style="width:100%;height:420px;object-fit:cover;">
+					<div class="blog-content text-box text-dark" style="background:transparent; padding:20px;">
+						<div class="top-meta">24.11.2025 / in <a href="#">Categoría</a></div>
+						<h2 class="gs-title">{% if blog.title %}{{ blog.title }}{% else %}Noticia{% endif %}</h2>
+						<p>Este es el contenido completo de la noticia. Aquí puedes escribir el artículo extenso que
+							aparecerá en la página de detalle. Usa párrafos, listas y etiquetas HTML estándar para
+							estructurar el contenido.</p>
+						<p>Segundo párrafo con más información.</p>
+					</div>
 				</div>
 
-				<!-- Comment form -->
 				<div class="mt-4">
 					<h4>Dejar un comentario</h4>
-					<form method="post">
-						{% csrf_token %}
+					<form>
 						<div class="form-group">
-							{{ form.author_name }}
+							<input type="text" class="form-control" placeholder="Tu nombre (opcional)">
 						</div>
 						<div class="form-group">
-							{{ form.content }}
+							<textarea class="form-control" rows="4" placeholder="Escribe tu comentario..."></textarea>
 						</div>
-						<button type="submit" class="site-btn">Enviar comentario</button>
+						<button type="button" class="site-btn">Enviar comentario <img
+								src="/static/img/icons/double-arrow.png" alt="#" /></button>
 					</form>
 				</div>
 
+				<div class="mt-5" style= "color: white;">
+					<h4>Comentarios</h4>
+					<div class="comment-item" style="padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);">
+						<div class="comment-meta">24.11.2025 10:30 / <strong>Juan Pérez</strong></div>
+						<p>Muy buena noticia, gracias por compartirla.</p>
+					</div>
+					<div class="comment-item" style="padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);">
+						<div class="comment-meta">23.11.2025 18:12 / <strong>Ana</strong></div>
+						<p>Interesante artículo, me gustaría ver más detalles sobre el lanzamiento.</p>
+					</div>
+				</div>
+
+
+
 			</div>
+
 			<div class="col-xl-3 col-lg-4 col-md-5 sidebar">
 				<div id="stickySidebar">
 					<div class="widget-item">
-						<h4 class="widget-title">Última noticia</h4>
+						<h4 class="widget-title">Trending</h4>
+						<div class="trending-widget">
+							<div class="tw-item">
+								<div class="tw-thumb"><img src="/static/img/blog-widget/1.jpg" alt="#"></div>
+								<div class="tw-text">
+									<div class="tw-meta">11.11.18 / in <a href="">Juegos</a></div>
+									<h5>The best online game is out now!</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="widget-item">
+						<div class="categories-widget">
+							<h4 class="widget-title">Categorías</h4>
+							<ul>
+								<li><a href="#">Juegos</a></li>
+								<li><a href="#">Gaming Tips & Tricks</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </section>
+
+
+
+
 
 {% endblock %}

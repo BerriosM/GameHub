@@ -16,13 +16,6 @@ class SignUpView(CreateView):
     template_name = "registration/signup.html"
 
 
-# Add game view
-class AddGameView(GenericCreateView):
-    model = Game
-    form_class = GameForm
-    template_name = "add_game.html"
-    success_url = reverse_lazy('games')
-
 # Create your views here.
 def main(request):
     # show latest 3 blog posts on the homepage
@@ -32,31 +25,6 @@ def main(request):
 def games(request):
     games = Game.objects.order_by('-created_at')
     return render(request, 'games.html', {'games': games})
-
-def review(request):
-    reviews = Review.objects.order_by('-created_at')
-    return render(request, 'review.html', {'reviews': reviews})
-
-
-class AddReviewView(CreateView):
-    model = Review
-    form_class = ReviewForm
-    template_name = 'add_review.html'
-    success_url = reverse_lazy('review')
-
-def blog(request):
-    posts = BlogPost.objects.order_by('-created_at')
-    return render(request, 'blog.html', {'posts': posts})
-
-
-class AddNewsView(CreateView):
-    model = BlogPost
-    form_class = BlogPostForm
-    template_name = 'add_news.html'
-    success_url = reverse_lazy('blog')
-
-def contact(request):
-    return render(request, 'contact.html')
 
 def game_single(request, pk):
     game = get_object_or_404(Game, pk=pk)
@@ -74,3 +42,38 @@ def game_single(request, pk):
         'average_rating': average_rating,
     })
 
+# Add game view
+class AddGameView(GenericCreateView):
+    model = Game
+    form_class = GameForm
+    template_name = "add_game.html"
+    success_url = reverse_lazy('games')
+
+def review(request):
+    reviews = Review.objects.order_by('-created_at')
+    return render(request, 'review.html', {'reviews': reviews})
+
+
+class AddReviewView(CreateView):
+    model = Review
+    form_class = ReviewForm
+    template_name = 'add_review.html'
+    success_url = reverse_lazy('review')
+
+def blog(request):
+    posts = BlogPost.objects.order_by('-created_at')
+    return render(request, 'blog.html', {'posts': posts})
+
+def blog_single(request):
+    return render(request, 'blog-single.html',)
+
+class AddNewsView(CreateView):
+    model = BlogPost
+    form_class = BlogPostForm
+    template_name = 'add_news.html'
+    success_url = reverse_lazy('blog')
+
+
+
+def contact(request):
+    return render(request, 'contact.html')
