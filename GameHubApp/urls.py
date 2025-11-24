@@ -10,7 +10,7 @@ urlpatterns = [
     path('review/add/', views.AddReviewView.as_view(), name='review_add'),
     path('blog/', views.blog, name='blog'),
     path('blog/add/', views.AddNewsView.as_view(), name='blog_add'),
-    path('blog-single/', views.blog_single, name='blog_single'),
+    path('post-single/<int:pk>/', views.post_single, name='post_single'),
     path('signup/', views.SignUpView.as_view(), name='signup'),
     path('contact/', views.contact, name='contact'),
 ]

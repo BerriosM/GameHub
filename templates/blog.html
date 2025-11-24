@@ -41,12 +41,12 @@
 						</div>
 						<h3>{{ post.title }}</h3>
 						<p>{{ post.excerpt|default:post.content|truncatechars:250 }}</p>
-						<a href="{% url 'blog_single' blog.id %}" class="read-more">Ver mas <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
+						<a href="{% url 'post_single' post.id %}" class="read-more">Ver mas <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
 					</div>
 				</div>
 				{% endfor %}
 				{% else %}
-				<p>No hay noticias aún. Usa "Agregar noticia" para crear la primera.</p>
+				<p style="color: white;">No hay noticias aún. Usa "Agregar noticia" para crear la primera.</p>
 				{% endif %}
 
 

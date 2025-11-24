@@ -64,8 +64,9 @@ def blog(request):
     posts = BlogPost.objects.order_by('-created_at')
     return render(request, 'blog.html', {'posts': posts})
 
-def blog_single(request):
-    return render(request, 'blog-single.html',)
+def post_single(request, pk):
+    post = get_object_or_404(BlogPost, pk=pk)
+    return render(request, 'post-single.html', {'post': post})
 
 class AddNewsView(CreateView):
     model = BlogPost

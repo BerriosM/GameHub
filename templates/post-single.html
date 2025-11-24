@@ -24,7 +24,7 @@
 					<img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="#" class="blog-thumbnail" style="width:100%;height:420px;object-fit:cover;">
 					<div class="blog-content text-box text-dark" style="background:transparent; padding:20px;">
 						<div class="top-meta">24.11.2025 / in <a href="#">Categoría</a></div>
-						<h2 class="gs-title">{% if blog.title %}{{ blog.title }}{% else %}Noticia{% endif %}</h2>
+						<h2 class="gs-title">{% if post.title %}{{ post.title }}{% else %}Noticia{% endif %}</h2>
 						<p>Este es el contenido completo de la noticia. Aquí puedes escribir el artículo extenso que
 							aparecerá en la página de detalle. Usa párrafos, listas y etiquetas HTML estándar para
 							estructurar el contenido.</p>
