@@ -7,7 +7,7 @@
 
 <section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/3.jpg' %}">
 	<div class="page-info">
-		<h2>Blog</h2>
+		<h2>Noticia</h2>
 		<div class="site-breadcrumb">
 			<a href="">Inicio</a> /
 			<span>Blog</span>
@@ -34,28 +34,31 @@
 
 				<div class="mt-4">
 					<h4>Dejar un comentario</h4>
-					<form>
+					<form method="post">
+						{% csrf_token %}
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Tu nombre (opcional)">
+							{{ form.name }}
 						</div>
 						<div class="form-group">
-							<textarea class="form-control" rows="4" placeholder="Escribe tu comentario..."></textarea>
+							{{ form.content }}
 						</div>
-						<button type="button" class="site-btn">Enviar comentario <img
-								src="/static/img/icons/double-arrow.png" alt="#" /></button>
+						<button type="submit" class="site-btn">Enviar comentario <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></button>
 					</form>
 				</div>
 
-				<div class="mt-5" style= "color: white;">
-					<h4>Comentarios</h4>
-					<div class="comment-item" style="padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);">
-						<div class="comment-meta">24.11.2025 10:30 / <strong>Juan Pérez</strong></div>
-						<p>Muy buena noticia, gracias por compartirla.</p>
-					</div>
-					<div class="comment-item" style="padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);">
-						<div class="comment-meta">23.11.2025 18:12 / <strong>Ana</strong></div>
-						<p>Interesante artículo, me gustaría ver más detalles sobre el lanzamiento.</p>
-					</div>
+				<div class="mt-5" style="background: rgba(0,0,0,0.55); padding:20px; border-radius:8px; color: white;">
+					<h2 class="widget-title" style="color: white;">Comentarios</h2>
+					{% if comments %}
+						{% for comment in comments %}
+							<div class="comment-item" style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+								<div class="comment-meta">{{ comment.created_at|date:"d.m.Y H:i" }} / <strong>{{ comment.name|default:'Anónimo' }}</strong></div>
+								<p style="color: rgb(190, 0, 190)">{{ comment.content }}</p>
+							</div>
+						
+							{% endfor %}
+					{% else %}
+						<p>No hay comentarios aún. Sé el primero en comentar.</p>
+					{% endif %}
 				</div>
 
 

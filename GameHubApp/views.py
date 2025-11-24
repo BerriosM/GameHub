@@ -1,12 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic.edit import CreateView as GenericCreateView
 
-from .models import Game, BlogPost, Review
+from .models import Game, BlogPost, Review, Comment
 from django.db.models import Avg
-from .forms import GameForm, BlogPostForm, ReviewForm
+from .forms import GameForm, BlogPostForm, ReviewForm, CommentForm
 
 
 # Login
@@ -62,11 +62,22 @@ class AddReviewView(CreateView):
 
 def blog(request):
     posts = BlogPost.objects.order_by('-created_at')
-    return render(request, 'blog.html', {'posts': posts})
+    latest_comments = Comment.objects.select_related('post').order_by('-created_at')[:4]
+    return render(request, 'blog.html', {'posts': posts, 'latest_comments': latest_comments})
 
 def post_single(request, pk):
     post = get_object_or_404(BlogPost, pk=pk)
-    return render(request, 'post-single.html', {'post': post})
+    comments = post.comments.order_by('-created_at')
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('post_single', pk=pk)
+    else:
+        form = CommentForm()
+    return render(request, 'post-single.html', {'post': post, 'comments': comments, 'form': form})
 
 class AddNewsView(CreateView):
     model = BlogPost

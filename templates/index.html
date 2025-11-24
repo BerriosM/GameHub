@@ -49,7 +49,7 @@
 						{% for post in posts %}
 						<div class="blog-item">
 							<div class="blog-thumb">
-								<img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="">
+								<img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="#">
 							</div>
 							<div class="blog-text text-box text-white">
 								<div class="top-meta">{{ post.created_at|date:"d.m.Y" }} / in <a href="">{{ post.category }}</a></div>
