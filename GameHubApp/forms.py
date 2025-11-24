@@ -2,6 +2,7 @@ from django import forms
 from .models import Game
 from .models import BlogPost
 from .models import Review
+from .models import Comment
 
 
 # Opciones por defecto — puedes modificarlas a tu gusto
@@ -66,4 +67,14 @@ class ReviewForm(forms.ModelForm):
             'image': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ruta imagen (p.ej. img/review/1.jpg)'}),
             'excerpt': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Extracto corto'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 8, 'placeholder': 'Contenido completo'}),
+        }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['name', 'content']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tu nombre (opcional)'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Escribe tu comentario...'}),
         }

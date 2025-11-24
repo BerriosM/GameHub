@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+
+<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/3.jpg' %}">
+	<div class="page-info">
+		<h2>Noticia</h2>
+		<div class="site-breadcrumb">
+			<a href="">Inicio</a> /
+			<span>Blog</span>
+		</div>
+	</div>
+</section>
+
+<!-- News detail section -->
+<section class="blog-page" style="padding:40px 0;">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-9 col-lg-8 col-md-7">
+				<div class="big-blog-item">
+					<img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="#" class="blog-thumbnail" style="width:100%;height:420px;object-fit:cover;">
+					<div class="blog-content text-box text-dark" style="background:transparent; padding:20px;">
+						<div class="top-meta">24.11.2025 / in <a href="#">Categoría</a></div>
+						<h2 class="gs-title" style="color: white;">{% if post.title %}{{ post.title }}{% else %}Noticia{% endif %}</h2>
+						<p>Este es el contenido completo de la noticia. Aquí puedes escribir el artículo extenso que
+							aparecerá en la página de detalle. Usa párrafos, listas y etiquetas HTML estándar para
+							estructurar el contenido.</p>
+						<p>Segundo párrafo con más información.</p>
+					</div>
+				</div>
+
+				<div class="mt-4">
+					<h4>Dejar un comentario</h4>
+					<form method="post">
+						{% csrf_token %}
+						<div class="form-group">
+							{{ form.name }}
+						</div>
+						<div class="form-group">
+							{{ form.content }}
+						</div>
+						<button type="submit" class="site-btn">Enviar comentario <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></button>
+					</form>
+				</div>
+
+				<div class="mt-5" style="background: rgba(0,0,0,0.55); padding:20px; border-radius:8px; color: white;">
+					<h2 class="widget-title" style="color: white;">Comentarios</h2>
+					{% if comments %}
+						{% for comment in comments %}
+							<div class="comment-item" style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+								<div class="comment-meta">{{ comment.created_at|date:"d.m.Y H:i" }} / <strong>{{ comment.name|default:'Anónimo' }}</strong></div>
+								<p style="color: rgb(190, 0, 190)">{{ comment.content }}</p>
+							</div>
+						
+							{% endfor %}
+					{% else %}
+						<p>No hay comentarios aún. Sé el primero en comentar.</p>
+					{% endif %}
+				</div>
+
+
+
+			</div>
+
+			<div class="col-xl-3 col-lg-4 col-md-5 sidebar">
+				<div id="stickySidebar">
+					<div class="widget-item">
+						<h4 class="widget-title">Trending</h4>
+						<div class="trending-widget">
+							<div class="tw-item">
+								<div class="tw-thumb"><img src="/static/img/blog-widget/1.jpg" alt="#"></div>
+								<div class="tw-text">
+									<div class="tw-meta">11.11.18 / in <a href="">Juegos</a></div>
+									<h5>The best online game is out now!</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="widget-item">
+						<div class="categories-widget">
+							<h4 class="widget-title">Categorías</h4>
+							<ul>
+								<li><a href="#">Juegos</a></li>
+								<li><a href="#">Gaming Tips & Tricks</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+
+
+
+
+{% endblock %}

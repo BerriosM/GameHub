@@ -1,12 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic.edit import CreateView as GenericCreateView
 
-from .models import Game, BlogPost, Review
+from .models import Game, BlogPost, Review, Comment
 from django.db.models import Avg
-from .forms import GameForm, BlogPostForm, ReviewForm
+from .forms import GameForm, BlogPostForm, ReviewForm, CommentForm
 
 
 # Login
@@ -16,45 +16,15 @@ class SignUpView(CreateView):
     template_name = "registration/signup.html"
 
 
-# Add game view
-class AddGameView(GenericCreateView):
-    model = Game
-    form_class = GameForm
-    template_name = "add_game.html"
-    success_url = reverse_lazy('games')
-
 # Create your views here.
 def main(request):
-    return render(request, 'index.html')
+    # show latest 3 blog posts on the homepage
+    posts = BlogPost.objects.order_by('-created_at')[:3]
+    return render(request, 'index.html', {'posts': posts})
 
 def games(request):
     games = Game.objects.order_by('-created_at')
     return render(request, 'games.html', {'games': games})
-
-def review(request):
-    reviews = Review.objects.order_by('-created_at')
-    return render(request, 'review.html', {'reviews': reviews})
-
-
-class AddReviewView(CreateView):
-    model = Review
-    form_class = ReviewForm
-    template_name = 'add_review.html'
-    success_url = reverse_lazy('review')
-
-def blog(request):
-    posts = BlogPost.objects.order_by('-created_at')
-    return render(request, 'blog.html', {'posts': posts})
-
-
-class AddNewsView(CreateView):
-    model = BlogPost
-    form_class = BlogPostForm
-    template_name = 'add_news.html'
-    success_url = reverse_lazy('blog')
-
-def contact(request):
-    return render(request, 'contact.html')
 
 def game_single(request, pk):
     game = get_object_or_404(Game, pk=pk)
@@ -72,3 +42,50 @@ def game_single(request, pk):
         'average_rating': average_rating,
     })
 
+# Add game view
+class AddGameView(GenericCreateView):
+    model = Game
+    form_class = GameForm
+    template_name = "add_game.html"
+    success_url = reverse_lazy('games')
+
+def review(request):
+    reviews = Review.objects.order_by('-created_at')
+    return render(request, 'review.html', {'reviews': reviews})
+
+
+class AddReviewView(CreateView):
+    model = Review
+    form_class = ReviewForm
+    template_name = 'add_review.html'
+    success_url = reverse_lazy('review')
+
+def blog(request):
+    posts = BlogPost.objects.order_by('-created_at')
+    latest_comments = Comment.objects.select_related('post').order_by('-created_at')[:4]
+    return render(request, 'blog.html', {'posts': posts, 'latest_comments': latest_comments})
+
+def post_single(request, pk):
+    post = get_object_or_404(BlogPost, pk=pk)
+    comments = post.comments.order_by('-created_at')
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('post_single', pk=pk)
+    else:
+        form = CommentForm()
+    return render(request, 'post-single.html', {'post': post, 'comments': comments, 'form': form})
+
+class AddNewsView(CreateView):
+    model = BlogPost
+    form_class = BlogPostForm
+    template_name = 'add_news.html'
+    success_url = reverse_lazy('blog')
+
+
+
+def contact(request):
+    return render(request, 'contact.html')

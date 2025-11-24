@@ -31,46 +31,6 @@
 	<!-- Hero section end-->
 
 
-	<!-- Intro section -->
-	<section class="intro-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4">
-					<div class="intro-text-box text-box text-white">
-						<div class="top-meta">11.11.18 / in <a href="">Juegos</a></div>
-						<h3>The best online game is out now!</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida....</p>
-						<a href="#" class="read-more">Read More <img src="{% static 'img/icons/double-arrow.png' %}"
-								alt="#" /></a>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="intro-text-box text-box text-white">
-						<div class="top-meta">11.11.18 / in <a href="">Playstation</a></div>
-						<h3>Top 5 best Juegos in november</h3>
-						<p>Ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-							et dolore magna aliqua. Quis ipsum labore suspendisse ultrices gravida....</p>
-						<a href="#" class="read-more">Read More <img src="{% static 'img/icons/double-arrow.png' %}"
-								alt="#" /></a>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="intro-text-box text-box text-white">
-						<div class="top-meta">11.11.18 / in <a href="">Reseñas</a></div>
-						<h3>Get this game at a promo price</h3>
-						<p>Sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-							magna aliqua. Quis ipsum suspendisse ultrices gravida ncididunt ut labore ....</p>
-						<a href="#" class="read-more">Read More <img src="{% static 'img/icons/double-arrow.png' %}"
-								alt="#" /></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Intro section end -->
-
-
 	<!-- Blog section -->
 	<section class="blog-section spad">
 		<div class="container">
@@ -85,101 +45,29 @@
 						<li><a href="#">Estrategia</a></li>
 						<li><a href="#">Online</a></li>
 					</ul>
-					<!-- Blog item -->
-					<div class="blog-item">
-						<div class="blog-thumb">
-							<img src="{% static './img/blog/1.jpg' %}" alt="">
+					{% if posts %}
+						{% for post in posts %}
+						<div class="blog-item">
+							<div class="blog-thumb">
+								<img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="#">
+							</div>
+							<div class="blog-text text-box text-white">
+								<div class="top-meta">{{ post.created_at|date:"d.m.Y" }} / in <a href="">{{ post.category }}</a></div>
+								<h3>{{ post.title }}</h3>
+								<p>{{ post.excerpt|default:post.content|truncatechars:150 }}</p>
+								<a href="#" class="read-more">Ver mas <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
+							</div>
 						</div>
-						<div class="blog-text text-box text-white">
-							<div class="top-meta">11.11.18 / in <a href="">Juegos</a></div>
-							<h3>The best online game is out now!</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius-mod tempor
-								incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.
-								Lorem ipsum dolor sit amet, consecte-tur adipiscing elit, sed do eiusmod tempor
-								incididunt ut labore et dolore magna aliqua.....</p>
-							<a href="#" class="read-more">Read More <img src="{% static 'img/icons/double-arrow.png' %}"
-									alt="#" /></a>
-						</div>
-					</div>
-					<!-- Blog item -->
-					<div class="blog-item">
-						<div class="blog-thumb">
-							<img src="{% static './img/blog/2.jpg' %}" alt="">
-						</div>
-						<div class="blog-text text-box text-white">
-							<div class="top-meta">11.11.18 / in <a href="">Juegos</a></div>
-							<h3>The best online game is out now!</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius-mod tempor
-								incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.
-								Lorem ipsum dolor sit amet, consecte-tur adipiscing elit, sed do eiusmod tempor
-								incididunt ut labore et dolore magna aliqua.....</p>
-							<a href="#" class="read-more">Read More <img src="{% static 'img/icons/double-arrow.png' %}"
-									alt="#" /></a>
-						</div>
-					</div>
-					<!-- Blog item -->
-					<div class="blog-item">
-						<div class="blog-thumb">
-							<img src="{% static './img/blog/3.jpg' %}" alt="">
-						</div>
-						<div class="blog-text text-box text-white">
-							<div class="top-meta">11.11.18 / in <a href="">Juegos</a></div>
-							<h3>The best online game is out now!</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius-mod tempor
-								incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.
-								Lorem ipsum dolor sit amet, consecte-tur adipiscing elit, sed do eiusmod tempor
-								incididunt ut labore et dolore magna aliqua.....</p>
-							<a href="#" class="read-more">Read More <img src="{% static 'img/icons/double-arrow.png' %}"
-									alt="#" /></a>
-						</div>
-					</div>
+						{% endfor %}
+					{% else %}
+						<p>No hay noticias aún. <a href="{% url 'blog_add' %}">Agrega la primera noticia</a>.</p>
+					{% endif %}
 				</div>
 				<div class="col-xl-3 col-lg-4 col-md-5 sidebar">
 					<div id="stickySidebar">
 						<div class="widget-item">
-							<h4 class="widget-title">Trending</h4>
-							<div class="trending-widget">
-								<div class="tw-item">
-									<div class="tw-thumb">
-										<img src="{% static './img/blog-widget/1.jpg' %}" alt="#">
-									</div>
-									<div class="tw-text">
-										<div class="tw-meta">11.11.18 / in <a href="">Juegos</a></div>
-										<h5>The best online game is out now!</h5>
-									</div>
-								</div>
-								<div class="tw-item">
-									<div class="tw-thumb">
-										<img src="{% static './img/blog-widget/2.jpg' %}" alt="#">
-									</div>
-									<div class="tw-text">
-										<div class="tw-meta">11.11.18 / in <a href="">Juegos</a></div>
-										<h5>The best online game is out now!</h5>
-									</div>
-								</div>
-								<div class="tw-item">
-									<div class="tw-thumb">
-										<img src="{% static './img/blog-widget/3.jpg' %}" alt="#">
-									</div>
-									<div class="tw-text">
-										<div class="tw-meta">11.11.18 / in <a href="">Juegos</a></div>
-										<h5>The best online game is out now!</h5>
-									</div>
-								</div>
-								<div class="tw-item">
-									<div class="tw-thumb">
-										<img src="{% static './img/blog-widget/4.jpg' %}" alt="#">
-									</div>
-									<div class="tw-text">
-										<div class="tw-meta">11.11.18 / in <a href="">Juegos</a></div>
-										<h5>The best online game is out now!</h5>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="widget-item">
 							<div class="categories-widget">
-								<h4 class="widget-title">categories</h4>
+								<h4 class="widget-title">categorias</h4>
 								<ul>
 									<li><a href="">Juegos</a></li>
 									<li><a href="">Gaming Tips & Tricks</a></li>
@@ -230,7 +118,7 @@
 					adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vestibulum
 					posuere porttitor justo id pellentesque. Proin id lacus feugiat, posuere erat sit amet, commodo
 					ipsum. Donec pellentesque vestibulum metus...</p>
-				<a href="#" class="read-more">Read More <img src="{% static 'img/icons/double-arrow.png' %}"
+				<a href="#" class="read-more">Ver mas <img src="{% static 'img/icons/double-arrow.png' %}"
 						alt="#" /></a>
 			</div>
 		</div>
