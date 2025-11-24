@@ -28,23 +28,25 @@
 					<li><a href="#">Online</a></li>
 				</ul>
 
-				<a href="{% url 'blog_add' %}" class="btn btn-primary" style="margin:10px 0; display:inline-block;">Agregar noticia</a>
+				<a href="{% url 'blog_add' %}" class="btn btn-primary"
+					style="margin:10px 0; display:inline-block;">Agregar noticia</a>
 
 				{% if posts %}
-					{% for post in posts %}
-						<div class="big-blog-item">
-							<img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="#" class="blog-thumbnail">
-							<div class="blog-content text-box text-white">
-								<div class="top-meta">{{ post.created_at|date:"d.m.Y" }} / in <a href="">{{ post.category }}</a></div>
-								<h3>{{ post.title }}</h3>
-								<p>{{ post.excerpt|default:post.content|truncatechars:250 }}</p>
-								<a href="#" class="read-more">Read More <img src="{% static 'img/icons/double-arrow.png' %}"
-										alt="#" /></a>
-							</div>
-							</div>
-						{% endfor %}
+				{% for post in posts %}
+				<div class="big-blog-item">
+					<img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"
+						alt="#" class="blog-thumbnail" style="width:100%;height:420px;object-fit:cover;">
+					<div class="blog-content text-box text-white">
+						<div class="top-meta">{{ post.created_at|date:"d.m.Y" }} / in <a href="">{{ post.category }}</a>
+						</div>
+						<h3>{{ post.title }}</h3>
+						<p>{{ post.excerpt|default:post.content|truncatechars:250 }}</p>
+						<a href="{% url 'post_single' post.id %}" class="read-more">Ver mas <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
+					</div>
+				</div>
+				{% endfor %}
 				{% else %}
-					<p>No hay noticias aún. Usa "Agregar noticia" para crear la primera.</p>
+				<p style="color: white;">No hay noticias aún. Usa "Agregar noticia" para crear la primera.</p>
 				{% endif %}
 
 
@@ -63,49 +65,8 @@
 						</form>
 					</div>
 					<div class="widget-item">
-						<h4 class="widget-title">Trending</h4>
-						<div class="trending-widget">
-							<div class="tw-item">
-								<div class="tw-thumb">
-									<img src="{% static 'img/blog-widget/1.jpg' %}" alt="#">
-								</div>
-								<div class="tw-text">
-									<div class="tw-meta">11.11.18 / in <a href="">Juegos</a></div>
-									<h5>The best online game is out now!</h5>
-								</div>
-							</div>
-							<div class="tw-item">
-								<div class="tw-thumb">
-									<img src="{% static 'img/blog-widget/2.jpg' %}" alt="#">
-								</div>
-								<div class="tw-text">
-									<div class="tw-meta">11.11.18 / in <a href="">Juegos</a></div>
-									<h5>The best online game is out now!</h5>
-								</div>
-							</div>
-							<div class="tw-item">
-								<div class="tw-thumb">
-									<img src="{% static 'img/blog-widget/3.jpg' %}" alt="#">
-								</div>
-								<div class="tw-text">
-									<div class="tw-meta">11.11.18 / in <a href="">Juegos</a></div>
-									<h5>The best online game is out now!</h5>
-								</div>
-							</div>
-							<div class="tw-item">
-								<div class="tw-thumb">
-									<img src="{% static 'img/blog-widget/4.jpg' %}" alt="#">
-								</div>
-								<div class="tw-text">
-									<div class="tw-meta">11.11.18 / in <a href="">Juegos</a></div>
-									<h5>The best online game is out now!</h5>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="widget-item">
 						<div class="categories-widget">
-							<h4 class="widget-title">categories</h4>
+							<h4 class="widget-title">categorias</h4>
 							<ul>
 								<li><a href="">Juegos</a></li>
 								<li><a href="">Gaming Tips & Tricks</a></li>
@@ -117,28 +78,18 @@
 						</div>
 					</div>
 					<div class="widget-item">
-						<h4 class="widget-title">Latest Comments</h4>
+						<h4 class="widget-title">Ultimos Comentarios</h4>
 						<div class="latest-comments">
-							<div class="lc-item">
-								<img src="{% static 'img/blog-widget/1.jpg' %}" class="lc-avatar" alt="#">
-								<div class="tw-text"><a href="">Maria Smith</a> <span>On</span> The best online game
-									out there </div>
-							</div>
-							<div class="lc-item">
-								<img src="{% static 'img/blog-widget/2.jpg' %}" class="lc-avatar" alt="#">
-								<div class="tw-text"><a href="">Maria Smith</a> <span>On</span> The best online game
-									out there </div>
-							</div>
-							<div class="lc-item">
-								<img src="{% static 'img/blog-widget/3.jpg' %}" class="lc-avatar" alt="#">
-								<div class="tw-text"><a href="">Maria Smith</a> <span>On</span> The best online game
-									out there </div>
-							</div>
-							<div class="lc-item">
-								<img src="{% static 'img/blog-widget/4.jpg' %}" class="lc-avatar" alt="#">
-								<div class="tw-text"><a href="">Maria Smith</a> <span>On</span> The best online game
-									out there </div>
-							</div>
+							{% if latest_comments %}
+								{% for comment in latest_comments %}
+									<div class="lc-item">
+										<img src="{% if comment.post.image %}{% static comment.post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" class="lc-avatar" alt="#">
+										<div class="tw-text"><a href="{% url 'post_single' comment.post.id %}">{{ comment.post.title|truncatechars:30 }}</a> <span>:</span> {{ comment.content|truncatechars:40 }}</div>
+									</div>
+								{% endfor %}
+							{% else %}
+								<p style="color: white;">No hay comentarios recientes.</p>
+							{% endif %}
 						</div>
 					</div>
 					<div class="widget-item">
