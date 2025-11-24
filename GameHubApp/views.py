@@ -25,7 +25,9 @@ class AddGameView(GenericCreateView):
 
 # Create your views here.
 def main(request):
-    return render(request, 'index.html')
+    # show latest 3 blog posts on the homepage
+    posts = BlogPost.objects.order_by('-created_at')[:3]
+    return render(request, 'index.html', {'posts': posts})
 
 def games(request):
     games = Game.objects.order_by('-created_at')

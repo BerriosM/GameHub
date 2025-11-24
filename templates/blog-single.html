@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<section class="page-top-section set-bg" data-setbg="{% if post.image %}{% static post.image %}{% else %}{% static 'img/page-top-bg/3.jpg' %}{% endif %}">
+	<div class="page-info">
+		<h2>{{ post.title }}</h2>
+		<div class="site-breadcrumb">
+			<a href="{% url 'main' %}">Inicio</a> /
+			<span>{{ post.title }}</span>
+		</div>
+	</div>
+</section>
+
+<section class="blog-single-page">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-9 col-lg-8 col-md-7">
+				<div class="blog-single-preview">
+					{% if post.image %}
+					<img alt="{{ post.title }}" style="width:100%;height:420px;object-fit:cover;" src="{% static post.image %}">
+					{% else %}
+					<img src="{% static 'img/blog-big/1.jpg' %}" alt="{{ post.title }}">
+					{% endif %}
+				</div>
+				<div class="blog-meta">{{ post.created_at|date:"d.m.Y" }} / in <a href="#">{{ post.category }}</a></div>
+				<h2 class="blog-title">{{ post.title }}</h2>
+				<p>{{ post.content|linebreaks }}</p>
+
+				<!-- Comments -->
+				<div class="mt-5">
+					<h4>Comentarios</h4>
+				</div>
+
+				<!-- Comment form -->
+				<div class="mt-4">
+					<h4>Dejar un comentario</h4>
+					<form method="post">
+						{% csrf_token %}
+						<div class="form-group">
+							{{ form.author_name }}
+						</div>
+						<div class="form-group">
+							{{ form.content }}
+						</div>
+						<button type="submit" class="site-btn">Enviar comentario</button>
+					</form>
+				</div>
+
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-5 sidebar">
+				<div id="stickySidebar">
+					<div class="widget-item">
+						<h4 class="widget-title">Última noticia</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}
