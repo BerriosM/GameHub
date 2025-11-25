@@ -428,7 +428,7 @@ ol {
 	visibility: hidden;
 	opacity: 0;
 	margin-top: 50px;
-	background: #fff;
+	background: #000000;
 	z-index: 99;
 	-webkit-transition: all 0.4s;
 	-o-transition: all 0.4s;
@@ -458,6 +458,55 @@ ol {
 
 .slicknav_menu {
 	display: none;
+}
+
+/* Custom styles for contact-form (add_news / add_review / add_game) */
+.contact-form {
+	background: #52094e;
+	padding: 28px;
+	border-radius: 6px;
+}
+.contact-form .form-group {
+	margin-bottom: 22px;
+}
+.contact-label {
+	display: block;
+	font-style: italic;
+	font-weight: 700;
+	color: #6b6b6b;
+	text-transform: uppercase;
+	margin-bottom: 12px;
+	letter-spacing: 0.6px;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="number"],
+.contact-form input[type="file"],
+.contact-form select,
+.contact-form textarea {
+	width: 100%;
+	padding: 14px 16px;
+	border-radius: 4px;
+	border: 1px solid #ececec;
+	background: #fbfbfb;
+	color: #333;
+	font-size: 15px;
+	box-shadow: none;
+	-webkit-appearance: none;
+}
+.contact-form textarea { min-height: 200px; resize: vertical; }
+.contact-form input[type="file"] { padding: 8px 6px; background: transparent; border: none; }
+.contact-form ::placeholder { color: #9b9b9b; font-style: normal; text-transform: none; }
+.contact-form .text-danger { margin-top: 6px; color: #d63950; font-weight: 600; }
+
+/* Make site-btn a bit smaller on forms and keep the purple shadow */
+.contact-form .site-btn { min-width: 160px; padding: 18px 26px; }
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+	.contact-form { padding: 20px; }
+	.contact-label { margin-bottom: 8px; }
+	.contact-form .site-btn { width: 100%; display:block; margin-bottom: 10px; }
 }
 
 /*------------------
@@ -1909,7 +1958,7 @@ ol {
 	padding: 14px;
 	border-radius: 8px;
 	margin-bottom: 14px;
-	color: #fff
+	color: #ffffff
 }
 
 .post-card .post-thumb {
@@ -1985,6 +2034,8 @@ ol {
 	}
 
 	.profile-card {
-		margin-top: 10px
+		margin-top: 10px;
+		background-color: #000;
+		
 	}
 }

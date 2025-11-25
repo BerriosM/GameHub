@@ -32,12 +32,15 @@ def games(request):
     # support optional filtering by genre and/or platform via query params
     genre = request.GET.get('genre')
     platform = request.GET.get('platform')
+    q = request.GET.get('q')
     games = Game.objects.order_by('-created_at')
     if genre:
         games = games.filter(genre=genre)
     if platform:
         games = games.filter(platform=platform)
-    return render(request, 'games.html', {'games': games, 'current_genre': genre, 'current_platform': platform})
+    if q:
+        games = games.filter(title__icontains=q)
+    return render(request, 'games.html', {'games': games, 'current_genre': genre, 'current_platform': platform, 'current_q': q})
 
 def game_single(request, pk):
     game = get_object_or_404(Game, pk=pk)
