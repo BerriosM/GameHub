@@ -94,6 +94,11 @@ def post_single(request, pk):
         form = CommentForm()
     return render(request, 'post-single.html', {'post': post, 'comments': comments, 'form': form})
 
+
+def review_single(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    return render(request, 'review-single.html', {'review': review})
+
 class AddNewsView(LoginRequiredMixin, CreateView):
     model = BlogPost
     form_class = BlogPostForm

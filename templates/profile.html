@@ -46,6 +46,7 @@
                                         <div style="color:#cfcfe2;font-size:13px;margin-top:6px;">{{ post.created_at|date:"d M Y" }} · {{ post.category }}</div>
                                         <p style="margin-top:8px;color:#ddd">{{ post.excerpt|default:post.content|truncatechars:180 }}</p>
                                         <a href="{% url 'post_single' post.id %}" class="read-more">Ver más</a>
+                                        <a href="{% url 'post_single' post.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;">Detalles</a>
                                     </div>
                                     <div style="width:220px;">
                                         <img class="post-thumb" src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="thumb">
@@ -62,8 +63,15 @@
                     {% if user_reviews %}
                         {% for r in user_reviews %}
                             <div class="post-card">
-                                <h4 style="margin:0;color:#fff">{{ r.title }} <small style="color:#cfcfe2">— {{ r.rating }}</small></h4>
-                                <p style="color:#ddd">{{ r.excerpt|truncatechars:180 }}</p>
+                                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                                    <div>
+                                        <h4 style="margin:0;color:#fff">{{ r.title }} <small style="color:#cfcfe2">— {{ r.rating }}</small></h4>
+                                        <p style="color:#ddd">{{ r.excerpt|truncatechars:180 }}</p>
+                                    </div>
+                                    <div>
+                                        <a href="{% url 'review_single' r.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;">Detalles</a>
+                                    </div>
+                                </div>
                             </div>
                         {% endfor %}
                     {% else %}
@@ -75,8 +83,15 @@
                     {% if user_games %}
                         {% for g in user_games %}
                             <div class="post-card">
-                                <h4 style="margin:0;color:#fff">{{ g.title }}</h4>
-                                <p style="color:#ddd">{{ g.platform }} — {{ g.genre }}</p>
+                                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                                    <div>
+                                        <h4 style="margin:0;color:#fff">{{ g.title }}</h4>
+                                        <p style="color:#ddd">{{ g.platform }} — {{ g.genre }}</p>
+                                    </div>
+                                    <div>
+                                        <a href="{% url 'game_single' g.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;">Detalles</a>
+                                    </div>
+                                </div>
                             </div>
                         {% endfor %}
                     {% else %}
