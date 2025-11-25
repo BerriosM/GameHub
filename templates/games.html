@@ -53,14 +53,13 @@
 					{% for game in games %}
 					<div class="col-lg-4 col-md-6">
 						<div class="game-item">
-							<img alt="{{ game.title }}" style="width:100%;height:220px;object-fit:cover;" 
-							{% if game.image %} 
-							src="{% static 'img/games/' %}{{ game.image }}" 
-							{% else %}
-								src="{% static 'img/games/no-image.svg' %}" 
-							{% endif %}>
+							<a href="{% url 'games' %}?genre={{ game.genre|urlencode }}">
+								<img alt="{{ game.title }}" style="width:100%;height:220px;object-fit:cover;" 
+									src="{% if game.image %}{{ game.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}">
+							</a>
 							<h5>{{ game.title }}</h5>
-							    <a href="{% url 'game_single' game.id %}" class="read-more">Ver mas <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
+							<a href="{% url 'game_single' game.id %}" class="read-more">Ver mas <img
+									src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
 						</div>
 					</div>
 					{% empty %}
@@ -77,14 +76,13 @@
 				<div id="stickySidebar">
 					<div class="widget-item">
 						<div class="categories-widget">
-							<h4 class="widget-title">categorias</h4>
+							<h4 class="widget-title">Genero</h4>
 							<ul>
-								<li><a href="">Juegos</a></li>
-								<li><a href="">Gaming Tips & Tricks</a></li>
-								<li><a href="">Online Juegos</a></li>
-								<li><a href="">Team Juegos</a></li>
-								<li><a href="">Community</a></li>
-								<li><a href="">Uncategorized</a></li>
+								<li><a href="">Online</a></li>
+								<li><a href="">Aventura</a></li>
+								<li><a href="">Estrategia</a></li>
+								<li><a href="">Carreras</a></li>
+								<li><a href="">Disparos</a></li>
 							</ul>
 						</div>
 					</div>
@@ -95,18 +93,6 @@
 								<li><a href="">Xbox</a></li>
 								<li><a href="">PlayStation</a></li>
 								<li><a href="">Nintendo Switch </a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="widget-item">
-						<div class="categories-widget">
-							<h4 class="widget-title">Genero</h4>
-							<ul>
-								<li><a href="">Online</a></li>
-								<li><a href="">Aventura</a></li>
-								<li><a href="">Estrategia</a></li>
-								<li><a href="">Carreras</a></li>
-								<li><a href="">Disparos</a></li>
 							</ul>
 						</div>
 					</div>

@@ -17,43 +17,18 @@
 
 <section class="review-section">
     <div class="container">
-        <div class="card" style="padding:20px;">
-            <form method="post">
+        <div class="card" style="padding:20px; background-color: rgb(82, 19, 82);">
+            <form method="post" class="contact-form" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
-
-                <div class="form-group">
-                    {{ form.game.label_tag }}
-                    {{ form.game }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.title.label_tag }}
-                    {{ form.title }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.rating.label_tag }}
-                    {{ form.rating }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.image.label_tag }}
-                    {{ form.image }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.excerpt.label_tag }}
-                    {{ form.excerpt }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.content.label_tag }}
-                    {{ form.content }}
-                </div>
-
-                <button type="submit" class="btn btn-success">Guardar reseña</button>
-                <a href="{% url 'review' %}" class="btn btn-secondary">Cancelar</a>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                    {{ field }}
+                {% endfor %}
+                <button type="submit" class="site-btn">Guardar reseña<img src="{% static 'img/icons/double-arrow.png' %}" alt="#"/></button>
+                <a href="{% url 'review' %}" class="site-btn" style="background:#999;margin-left:8px;">Cancelar</a>
             </form>
         </div>
     </div>

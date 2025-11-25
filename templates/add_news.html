@@ -20,31 +20,17 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="card" style="padding:20px;">
-                    <form method="post">
+                    <form method="post" class="contact-form" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form.non_field_errors }}
-                        <div class="form-group">
-                            {{ form.title.label_tag }}
-                            {{ form.title }}
-                        </div>
-                        <div class="form-group">
-                            {{ form.category.label_tag }}
-                            {{ form.category }}
-                        </div>
-                        <div class="form-group">
-                            {{ form.image.label_tag }}
-                            {{ form.image }}
-                        </div>
-                        <div class="form-group">
-                            {{ form.excerpt.label_tag }}
-                            {{ form.excerpt }}
-                        </div>
-                        <div class="form-group">
-                            {{ form.content.label_tag }}
-                            {{ form.content }}
-                        </div>
-                        <button type="submit" class="btn btn-success">Guardar noticia</button>
-                        <a href="{% url 'blog' %}" class="btn btn-secondary">Cancelar</a>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                            {{ field }}
+                        {% endfor %}
+                        <button type="submit" class="site-btn">Guardar noticia<img src="{% static 'img/icons/double-arrow.png' %}" alt="#"/></button>
+                        <a href="{% url 'blog' %}" class="site-btn" style="background:#999;margin-left:8px;">Cancelar</a>
                     </form>
                 </div>
             </div>

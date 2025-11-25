@@ -1,0 +1,27 @@
+{% extends 'registration/base_login.html' %}
+
+{% block contenido %}
+    <form method="POST">
+        {% csrf_token %}
+        <h2>Registrarse</h2>
+        {{ form.non_field_errors }}
+        <div>
+            {{ form.username.label_tag }}<br>
+            {{ form.username }}
+            {{ form.username.errors }}
+        </div>
+        <div>
+            {{ form.password1.label_tag }}<br>
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+        </div>
+        <div>
+            {{ form.password2.label_tag }}<br>
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+        </div>
+        <input type="submit" value="Crear cuenta">
+
+        <p class="text">¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión</a></p>
+    </form>
+{% endblock %}

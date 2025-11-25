@@ -11,6 +11,12 @@ urlpatterns = [
     path('blog/', views.blog, name='blog'),
     path('blog/add/', views.AddNewsView.as_view(), name='blog_add'),
     path('post-single/<int:pk>/', views.post_single, name='post_single'),
+    path('profile/', views.profile, name='profile'),
+    path('profile/<str:username>/', views.user_profile, name='user_profile'),
+    path('review-single/<int:pk>/', views.review_single, name='review_single'),
     path('signup/', views.SignUpView.as_view(), name='signup'),
     path('contact/', views.contact, name='contact'),
+    path('games/delete/<int:pk>/', views.delete_game, name='game_delete'),
+    path('review/delete/<int:pk>/', views.delete_review, name='review_delete'),
+    path('blog/delete/<int:pk>/', views.delete_post, name='post_delete'),
 ]

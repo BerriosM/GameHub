@@ -6,7 +6,7 @@
 
 
 	<!-- Page top section -->
-	<section class="page-top-section set-bg" data-setbg="{% if game.image %}{% static 'img/games/' %}{{ game.image }}{% else %}{% static 'img/page-top-bg/1.jpg' %}{% endif %}">
+	<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/1.jpg' %}">
 		<div class="page-info">
 			<h2>{% if game.title %}{{ game.title }}{% else %}Juego{% endif %}</h2>
 			<div class="site-breadcrumb">
@@ -23,14 +23,14 @@
 		<div class="container">
 			<div class="game-single-preview">
 				{% if game.image %}
-				<img alt="{{ game.title }}" style="width:100%;height:420px;object-fit:cover;" src="{% static 'img/games/' %}{{ game.image }}">
+				<img alt="{{ game.title }}" style="width:100%;height:420px;object-fit:cover;" src="{{ game.image.url }}">
 				{% else %}
 				<img src="{% static 'img/games/no-image.svg' %}" alt="{{ game.title }}">
 				{% endif %}
 			</div>
 			<div class="row">
 				<div class="col-xl-9 col-lg-8 col-md-7 game-single-content">
-					<div class="gs-meta">{% if game.created_at %}{{ game.created_at|date:"d.m.Y" }}{% else %}--/--/----{% endif %} / in <a href="#">Juegos</a></div>
+					<div class="gs-meta">{% if game.created_at %}{{ game.created_at|date:"d.m.Y" }}{% else %}--/--/----{% endif %} / in <a href="#">Juegos</a> / por <strong>{% if game.author %}<a href="{% url 'user_profile' game.author.username %}">{{ game.author.get_full_name|default:game.author.username }}</a>{% else %}Anónimo{% endif %}</strong></div>
 					<h2 class="gs-title">{% if game.title %}{{ game.title }}{% else %}Juego{% endif %}</h2>
 					<div class="game-meta-options" style="margin-bottom:10px; color: white;">
 						<span style="display:inline-block;margin-right:12px;"><strong>Plataforma:</strong> {% if game.platform %}{{ game.platform }}{% else %}N/A{% endif %}</span>
@@ -38,16 +38,6 @@
 					</div>
 					<h4 style="margin-top: 50px;" >Gameplay</h4>
 					<p>{% if game.description %}{{ game.description }}{% else %}N/A{% endif %}</p>
-					<h4>Conclusion</h4>
-					<p>{% if game.long_description %}{{ game.long_description }}{% else %}N/A{% endif %}</p>
-					<div class="geme-social-share pt-4 d-flex">
-						<p>Share:</p>
-						<a href="#"><i class="fa fa-pinterest"></i></a>
-						<a href="#"><i class="fa fa-facebook"></i></a>
-						<a href="#"><i class="fa fa-twitter"></i></a>
-						<a href="#"><i class="fa fa-dribbble"></i></a>
-						<a href="#"><i class="fa fa-behance"></i></a>
-					</div>
 
 					<!-- Reviews for this game -->
 					<div class="mt-5">
@@ -58,15 +48,15 @@
 							<div class="row">
 								<div class="col-lg-2">
 									<div class="review-pic">
-										<img src="{% if r.image %}{% static r.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="" style="width:100%;height:60px;object-fit:cover;">
+										<img src="{% if r.image %}{{ r.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="" style="width:100%;height:60px;object-fit:cover;">
 									</div>
 								</div>
 								<div class="col-lg-10">
 									<div class="review-content text-white">
 										<div class="rating"><span>{{ r.rating }}</span> / 5</div>
 										<h5>{{ r.title }}</h5>
-										<p>{{ r.excerpt|default:r.content|truncatechars:200 }}</p>
-										<div class="top-meta">{{ r.created_at|date:"d.m.Y" }} / por <strong>{{ r.author_name|default:"Anónimo" }}</strong></div>
+										<p>{{ r.content|truncatechars:200 }}</p>
+										<div class="top-meta">{{ r.created_at|date:"d.m.Y" }} / por <strong>{% if r.author %}<a href="{% url 'user_profile' r.author.username %}">{{ r.author.get_full_name|default:r.author.username }}</a>{% else %}Anónimo{% endif %}</strong></div>
 									</div>
 								</div>
 							</div>
@@ -79,7 +69,6 @@
 				</div>
 				<div class="col-xl-3 col-lg-4 col-md-5 sidebar game-page-sideber">
 					<div id="stickySidebar">
-						<a href="{% url 'review_add' %}" class="btn btn-primary" style="margin:10px 0; display:block;">Agregar reseña</a>
 						<div class="widget-item">
 							<div class="rating-widget">
 								<h4 class="widget-title">Ratings</h4>
@@ -99,8 +88,8 @@
 								<h4 class="widget-title">Última reseña</h4>
 								{% if reviews %}
 								<div class="testim-text">
-									<p>{{ reviews.0.excerpt|default:reviews.0.content|truncatechars:120 }}</p>
-									<h6><span>{{ reviews.0.author_name|default:"Anónimo" }},</span> Usuario</h6>
+									<p>{{ reviews.0.content|truncatechars:120 }}</p>
+									<h6><span>{% if reviews.0.author %}<a href="{% url 'user_profile' reviews.0.author.username %}">{{ reviews.0.author.get_full_name|default:reviews.0.author.username }}</a>{% else %}Anónimo{% endif %},</span> Usuario</h6>
 								</div>
 								{% else %}
 								<p>No hay comentarios aún.</p>

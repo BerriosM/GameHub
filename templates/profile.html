@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/3.jpg' %}">
+        <div class="page-info">
+                <h2>Mi perfil</h2>
+        </div>
+</section>
+
+<section class="blog-page">
+    <div class="container">
+        <div class="container profile-wrapper">
+            <div class="profile-cover"></div>
+            <div class="profile-card">
+            <div class="profile-meta">
+                    <div class="profile-avatar">
+                        <img src="{% static 'img/games/no-image.svg' %}" alt="avatar">
+                    </div>
+                    <div class="profile-info">
+                    <h2>{{ profile_user.username }}</h2>
+                    <div class="profile-stats">
+                        <div><strong>{{ user_posts.count }}</strong> Posts</div>
+                        <div><strong>{{ user_reviews.count }}</strong> Reseñas</div>
+                        <div><strong>{{ user_games.count }}</strong> Juegos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:18px;">
+                <div class="profile-tabs" id="profile-tabs">
+                    <a class="tab-link active" data-tab="posts" style="color: white;">Posts</a>
+                    <a class="tab-link" data-tab="reviews" style="color: white;">Reseñas</a>
+                    <a class="tab-link" data-tab="games" style="color: white;">Juegos</a>
+                </div>
+
+                <div id="tab-posts" class="tab-content" style="margin-top:18px;">
+                    {% if user_posts %}
+                        {% for post in user_posts %}
+                            <div class="post-card">
+                                <div style="display:flex;gap:12px;align-items:flex-start;">
+                                    <div style="flex:1">
+                                        <h4 style="margin:0;color:#fff">{{ post.title }}</h4>
+                                        <div style="color:#cfcfe2;font-size:13px;margin-top:6px;">{{ post.created_at|date:"d M Y" }} · {{ post.category }}</div>
+                                        <p style="margin-top:8px;color:#ddd">{{ post.content|truncatechars:180 }}</p>
+                                        <a href="{% url 'post_single' post.id %}" class="read-more">Ver más</a>
+                                        <a href="{% url 'post_single' post.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;">Detalles</a>
+                                        {% if is_owner %}
+                                        <form method="post" action="{% url 'post_delete' post.id %}" style="display:inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;">Eliminar</button>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                    <div style="width:220px;">
+                                        <img class="post-thumb" src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="thumb">
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% if is_owner %}
+                            <p>No has publicado noticias aún.</p>
+                        {% else %}
+                            <p>Este usuario no ha publicado noticias aún.</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                <div id="tab-reviews" class="tab-content" style="display:none;margin-top:18px;">
+                    {% if user_reviews %}
+                        {% for r in user_reviews %}
+                            <div class="post-card">
+                                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                                    <div>
+                                        <h4 style="margin:0;color:#fff">{{ r.title }} <small style="color:#cfcfe2">— {{ r.rating }}</small></h4>
+                                        <p style="color:#ddd">{{ r.excerpt|truncatechars:180 }}</p>
+                                    </div>
+                                    <div>
+                                        <a href="{% url 'review_single' r.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;">Detalles</a>
+                                        {% if is_owner %}
+                                        <form method="post" action="{% url 'review_delete' r.id %}" style="display:inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;background:#c0392b;">Eliminar</button>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% if is_owner %}
+                            <p>No has escrito reseñas aún.</p>
+                        {% else %}
+                            <p>Este usuario no ha escrito reseñas aún.</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                <div id="tab-games" class="tab-content" style="display:none;margin-top:18px;">
+                    {% if user_games %}
+                        {% for g in user_games %}
+                            <div class="post-card">
+                                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                                    <div>
+                                        <h4 style="margin:0;color:#fff">{{ g.title }}</h4>
+                                        <p style="color:#ddd">{{ g.platform }} — {{ g.genre }}</p>
+                                    </div>
+                                    <div>
+                                        <a href="{% url 'game_single' g.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;">Detalles</a>
+                                        {% if is_owner %}
+                                        <form method="post" action="{% url 'game_delete' g.id %}" style="display:inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;background:#c0392b;">Eliminar</button>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% if is_owner %}
+                            <p>No has agregado juegos aún.</p>
+                        {% else %}
+                            <p>Este usuario no ha agregado juegos aún.</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    var links = document.querySelectorAll('.tab-link');
+    links.forEach(function(link){
+        link.addEventListener('click', function(){
+            document.querySelectorAll('.tab-link').forEach(function(l){l.classList.remove('active')});
+            link.classList.add('active');
+            var tab = link.getAttribute('data-tab');
+            document.querySelectorAll('.tab-content').forEach(function(tc){tc.style.display='none'});
+            document.getElementById('tab-'+tab).style.display='block';
+        });
+    });
+});
+</script>
+
+{% endblock %}

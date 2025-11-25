@@ -6,11 +6,12 @@
         <h2>Iniciar sesion</h2>
         <input type="text" name="username" placeholder="Username" required><br>
         <input type="password" name="password" placeholder="Password" required><br>
-        <p class="text">¿Olvido su contraseña?</p>
         <input type="submit" value="Login">
         
         {% if error %}
         <p class="message">{{ error }}</p>
         {% endif %}
+
+        <p class="text">¿No tienes cuenta? <a href="{% url 'signup' %}">Regístrate</a></p>
     </form>
 {% endblock %}

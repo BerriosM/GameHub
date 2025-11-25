@@ -1,4 +1,5 @@
 from django import forms
+from decimal import Decimal
 from .models import Game
 from .models import BlogPost
 from .models import Review
@@ -33,41 +34,50 @@ class GameForm(forms.ModelForm):
                                  widget=forms.Select(attrs={'class': 'form-control'}))
     genre = forms.ChoiceField(choices=GENRE_CHOICES,
                               widget=forms.Select(attrs={'class': 'form-control'}))
+    price = forms.DecimalField(max_digits=8, decimal_places=2, min_value=0, required=False,
+                               widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}))
+    image = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}))
 
     class Meta:
         model = Game
-        fields = ['title', 'platform', 'genre', 'description']
+        fields = ['title', 'platform', 'genre', 'description', 'price', 'image']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título del juego'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Descripción'}),
         }
 
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price in [None, '']:
+            return Decimal('0.00')
+        return price
+
 
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
-        fields = ['title', 'category', 'image', 'excerpt', 'content']
+        fields = ['title', 'category', 'image', 'content']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la noticia'}),
             'category': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Categoría'}),
-            'image': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ruta imagen (p.ej. img/blog-big/1.jpg)"}),
-            'excerpt': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Extracto corto'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 8, 'placeholder': 'Contenido completo'}),
         }
+
+    image = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}))
 
 
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['game', 'title', 'rating', 'image', 'excerpt', 'content']
+        fields = ['game', 'title', 'rating', 'image', 'content']
         widgets = {
             'game': forms.Select(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la reseña'}),
             'rating': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1', 'min': '0', 'max': '5'}),
-            'image': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ruta imagen (p.ej. img/review/1.jpg)'}),
-            'excerpt': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Extracto corto'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 8, 'placeholder': 'Contenido completo'}),
         }
+
+    image = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}))
 
 
 class CommentForm(forms.ModelForm):
