@@ -18,26 +18,23 @@
         height: 100vh;
         margin: 0;
         animation: fadeInZoom 1s ease-in-out;  /* Animation for fade-in effect */
+        color: white;
     }
 
     form {
         background: rgba(0, 0, 0, 0.6);
         padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         width: 300px;
         animation: fadeInZoom 1s ease-in-out;  /* Animation for form appearance */
     }
 
     h2 {
         margin-bottom: 20px;
-        color: #ffffff;
         text-align: center;
     }
 
-    .text {
-        color: #ffffff;
-    }
 
     input[type="text"],
     input[type="password"] {
@@ -48,7 +45,6 @@
         border-radius: 5px;
         font-size: 16px;
         background: rgba(250, 250, 250, 0.1);
-        color: white;
         transition: all 0.3s ease;
     }
 
@@ -60,7 +56,6 @@
 
     input[type="submit"] {
         background-color: #7f2288;
-        color: white;
         padding: 12px 20px;
         border: none;
         border-radius: 5px;
@@ -69,11 +64,13 @@
         width: 100%;
         margin-top: 10px;
         transition: background-color 0.3s ease, transform 0.3s ease;
+        color: white;
     }
 
     input[type="submit"]:hover {
         background-color: #7f2288;
         transform: scale(1.05);  /* Slight zoom on hover */
+        color: white;
     }
 
     .message {
@@ -81,3 +78,26 @@
         color: red;
         font-size: 14px;
     }
+
+/* Ensure input text and caret are white on dark backgrounds */
+form input,
+form textarea,
+.neon-form input,
+.neon-form textarea {
+    color: #ffffff !important;
+    caret-color: #ffffff !important;
+}
+
+/* Autofill override for WebKit browsers */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-text-fill-color: #ffffff !important;
+    box-shadow: 0 0 0px 1000px rgba(0,0,0,0.35) inset !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* Placeholder contrast */
+input::placeholder, textarea::placeholder {
+    color: rgba(255,255,255,0.55) !important;
+}
