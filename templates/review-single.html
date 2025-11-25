@@ -20,7 +20,7 @@
                         <div class="top-meta">{{ review.created_at|date:"d.m.Y" }}</div>
                         <h2 class="gs-title">{{ review.title }}</h2>
                         <p><strong>Juego:</strong> {{ review.game.title if review.game else "--" }}</p>
-                        <p>{{ review.content|default:review.excerpt }}</p>
+                        <p>{{ review.content }}</p>
                     </div>
                 </div>
             </div>

@@ -44,7 +44,7 @@
                                     <div style="flex:1">
                                         <h4 style="margin:0;color:#fff">{{ post.title }}</h4>
                                         <div style="color:#cfcfe2;font-size:13px;margin-top:6px;">{{ post.created_at|date:"d M Y" }} · {{ post.category }}</div>
-                                        <p style="margin-top:8px;color:#ddd">{{ post.excerpt|default:post.content|truncatechars:180 }}</p>
+                                        <p style="margin-top:8px;color:#ddd">{{ post.content|truncatechars:180 }}</p>
                                         <a href="{% url 'post_single' post.id %}" class="read-more">Ver más</a>
                                         <a href="{% url 'post_single' post.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;">Detalles</a>
                                     </div>

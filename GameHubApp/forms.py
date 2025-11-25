@@ -46,12 +46,11 @@ class GameForm(forms.ModelForm):
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
-        fields = ['title', 'category', 'image', 'excerpt', 'content']
+        fields = ['title', 'category', 'image', 'content']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la noticia'}),
             'category': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Categoría'}),
             'image': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ruta imagen (p.ej. img/blog-big/1.jpg)"}),
-            'excerpt': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Extracto corto'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 8, 'placeholder': 'Contenido completo'}),
         }
 
@@ -59,13 +58,12 @@ class BlogPostForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['game', 'title', 'rating', 'image', 'excerpt', 'content']
+        fields = ['game', 'title', 'rating', 'image', 'content']
         widgets = {
             'game': forms.Select(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la reseña'}),
             'rating': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1', 'min': '0', 'max': '5'}),
             'image': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ruta imagen (p.ej. img/review/1.jpg)'}),
-            'excerpt': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Extracto corto'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 8, 'placeholder': 'Contenido completo'}),
         }
 

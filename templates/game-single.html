@@ -55,7 +55,7 @@
 									<div class="review-content text-white">
 										<div class="rating"><span>{{ r.rating }}</span> / 5</div>
 										<h5>{{ r.title }}</h5>
-										<p>{{ r.excerpt|default:r.content|truncatechars:200 }}</p>
+										<p>{{ r.content|truncatechars:200 }}</p>
 										<div class="top-meta">{{ r.created_at|date:"d.m.Y" }} / por <strong>{{ r.author_name|default:"Anónimo" }}</strong></div>
 									</div>
 								</div>
@@ -89,7 +89,7 @@
 								<h4 class="widget-title">Última reseña</h4>
 								{% if reviews %}
 								<div class="testim-text">
-									<p>{{ reviews.0.excerpt|default:reviews.0.content|truncatechars:120 }}</p>
+									<p>{{ reviews.0.content|truncatechars:120 }}</p>
 									<h6><span>{{ reviews.0.author_name|default:"Anónimo" }},</span> Usuario</h6>
 								</div>
 								{% else %}
