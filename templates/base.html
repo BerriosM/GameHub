@@ -57,6 +57,19 @@
 					<img src="{% static './img/logo.png' %}" alt="">
 				</a>
 				<nav class="top-nav-area w-100">
+					{% if user.is_authenticated %}
+					<div class="user-panel" id="user-panel" style="position:relative; cursor:pointer;">
+						<p style="color: #c313b7; margin:0;">Usuario: {{ user.get_full_name|default:user.username }}</p>
+						<div class="user-menu" id="user-menu" style="display:none; position:absolute; right:0; top:110%; background:rgba(0,0,0,0.9); padding:8px; border-radius:6px; min-width:140px; z-index:999;">
+							<form method="post" action="{% url 'logout' %}" style="margin:0;">
+								{% csrf_token %}
+								<button type="submit" style="background:none;border:none;color:#fff;padding:8px 10px;width:100%;text-align:left;cursor:pointer;">Cerrar sesión</button>
+							</form>
+						</div>
+					</div>
+
+
+					{% else %}
 					<div class="user-panel">
 						<a href="{% url 'login' %}" class="user-icon">
 							<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="white"
@@ -66,14 +79,20 @@
 							</svg>
 						</a>
 					</div>
+					{% endif %}
+
 					<!-- Menu -->
 					<ul class="main-menu primary-menu">
 						<li><a href="{% url 'main' %}">Inicio</a></li>
-						<li><a href="{% url 'games' %}">Juegos</a>
-						</li>
+						<li><a href="{% url 'games' %}">Juegos</a></li>
 						<li><a href="{% url 'review' %}">Reseñas</a></li>
 						<li><a href="{% url 'blog' %}">Noticias</a></li>
 						<li><a href="{% url 'contact' %}">Contacto</a></li>
+						{% if user.is_authenticated %}
+						<li><a href="{% url 'profile' %}">Mi perfil</a></li>
+						{% endif %}
+
+
 					</ul>
 				</nav>
 			</div>
@@ -81,8 +100,8 @@
 	</header>
 
 
-{% block contenido %}
-{% endblock %}
+	{% block contenido %}
+	{% endblock %}
 
 
 
@@ -138,6 +157,22 @@
 	<script src="{% static 'js/jquery.sticky-sidebar.min.js' %}"></script>
 	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
 	<script src="{% static 'js/main.js' %}"></script>
+
+	<script>
+	// Toggle user menu on click and close on outside click
+	document.addEventListener('DOMContentLoaded', function () {
+		var panel = document.getElementById('user-panel');
+		var menu = document.getElementById('user-menu');
+		if (!panel || !menu) return;
+		panel.addEventListener('click', function (e) {
+			e.stopPropagation();
+			menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+		});
+		document.addEventListener('click', function () {
+			menu.style.display = 'none';
+		});
+	});
+	</script>
 
 </body>
 

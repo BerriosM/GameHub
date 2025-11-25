@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/3.jpg' %}">
+    <div class="page-info">
+        <h2>Mi perfil</h2>
+    </div>
+</section>
+
+<section class="blog-page" style="padding:40px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h3>Mis Noticias</h3>
+                {% if user_posts %}
+                    {% for post in user_posts %}
+                        <div class="big-blog-item">
+                            <img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="#" class="blog-thumbnail" style="width:100%;height:200px;object-fit:cover;">
+                            <div class="blog-content text-box text-white">
+                                <h4>{{ post.title }}</h4>
+                                <p>{{ post.excerpt|truncatechars:150 }}</p>
+                                <a href="{% url 'post_single' post.id %}" class="read-more">Ver mas</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No has publicado noticias aún.</p>
+                {% endif %}
+
+                <h3 class="mt-4">Mis Reseñas</h3>
+                {% if user_reviews %}
+                    {% for r in user_reviews %}
+                        <div class="review-item">
+                            <h5>{{ r.title }} — {{ r.rating }}</h5>
+                            <p>{{ r.excerpt|truncatechars:150 }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No has escrito reseñas aún.</p>
+                {% endif %}
+
+                <h3 class="mt-4">Mis Juegos</h3>
+                {% if user_games %}
+                    {% for g in user_games %}
+                        <div class="game-item">
+                            <h5>{{ g.title }}</h5>
+                            <p>{{ g.platform }} — {{ g.genre }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No has agregado juegos aún.</p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

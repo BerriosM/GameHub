@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic.edit import CreateView as GenericCreateView
@@ -43,22 +45,35 @@ def game_single(request, pk):
     })
 
 # Add game view
-class AddGameView(GenericCreateView):
+class AddGameView(LoginRequiredMixin, GenericCreateView):
     model = Game
     form_class = GameForm
     template_name = "add_game.html"
     success_url = reverse_lazy('games')
+
+    def form_valid(self, form):
+        # assign current user as author
+        obj = form.save(commit=False)
+        obj.author = self.request.user
+        obj.save()
+        return super().form_valid(form)
 
 def review(request):
     reviews = Review.objects.order_by('-created_at')
     return render(request, 'review.html', {'reviews': reviews})
 
 
-class AddReviewView(CreateView):
+class AddReviewView(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewForm
     template_name = 'add_review.html'
     success_url = reverse_lazy('review')
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.author = self.request.user
+        obj.save()
+        return super().form_valid(form)
 
 def blog(request):
     posts = BlogPost.objects.order_by('-created_at')
@@ -79,11 +94,30 @@ def post_single(request, pk):
         form = CommentForm()
     return render(request, 'post-single.html', {'post': post, 'comments': comments, 'form': form})
 
-class AddNewsView(CreateView):
+class AddNewsView(LoginRequiredMixin, CreateView):
     model = BlogPost
     form_class = BlogPostForm
     template_name = 'add_news.html'
     success_url = reverse_lazy('blog')
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.author = self.request.user
+        obj.save()
+        return super().form_valid(form)
+
+
+@login_required
+def profile(request):
+    user = request.user
+    user_games = Game.objects.filter(author=user).order_by('-created_at')
+    user_reviews = Review.objects.filter(author=user).order_by('-created_at')
+    user_posts = BlogPost.objects.filter(author=user).order_by('-created_at')
+    return render(request, 'profile.html', {
+        'user_games': user_games,
+        'user_reviews': user_reviews,
+        'user_posts': user_posts,
+    })
 
 
 

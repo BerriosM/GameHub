@@ -12,5 +12,7 @@
         {% if error %}
         <p class="message">{{ error }}</p>
         {% endif %}
+
+        <p class="text">¿No tienes cuenta? <a href="{% url 'signup' %}">Regístrate</a></p>
     </form>
 {% endblock %}
