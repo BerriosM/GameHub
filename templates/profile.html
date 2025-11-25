@@ -12,31 +12,28 @@
 
 <section class="blog-page">
     <div class="container">
-        <div class="profile-cover"></div>
-        <div class="profile-card">
+        <div class="container profile-wrapper">
+            <div class="profile-cover"></div>
+            <div class="profile-card">
             <div class="profile-meta">
-                <div class="profile-avatar">
-                    <img src="{% static 'img/games/no-image.svg' %}" alt="avatar">
-                </div>
-                <div class="profile-info" style="color: white;">
-                    <h2>{{ request.user.get_full_name|default:request.user.username }}</h2>
-                    <p>@{{ request.user.username }}</p>
+                    <div class="profile-avatar">
+                        <img src="{% static 'img/games/no-image.svg' %}" alt="avatar">
+                    </div>
+                    <div class="profile-info">
+                    <h2>{{ request.user.username }}</h2>
                     <div class="profile-stats">
                         <div><strong>{{ user_posts.count }}</strong> Posts</div>
                         <div><strong>{{ user_reviews.count }}</strong> Reseñas</div>
                         <div><strong>{{ user_games.count }}</strong> Juegos</div>
                     </div>
                 </div>
-                <div class="profile-actions">
-                    <a href="#" class="site-btn">Profile settings</a>
-                </div>
             </div>
 
             <div style="margin-top:18px;">
                 <div class="profile-tabs" id="profile-tabs">
-                    <a class="tab-link active" data-tab="posts">Posts</a>
-                    <a class="tab-link" data-tab="reviews">Reseñas</a>
-                    <a class="tab-link" data-tab="games">Juegos</a>
+                    <a class="tab-link active" data-tab="posts" style="color: white;">Posts</a>
+                    <a class="tab-link" data-tab="reviews" style="color: white;">Reseñas</a>
+                    <a class="tab-link" data-tab="games" style="color: white;">Juegos</a>
                 </div>
 
                 <div id="tab-posts" class="tab-content" style="margin-top:18px;">
