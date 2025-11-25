@@ -5,58 +5,106 @@
 {% block contenido %}
 
 <section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/3.jpg' %}">
-    <div class="page-info">
-        <h2>Mi perfil</h2>
-    </div>
+        <div class="page-info">
+                <h2>Mi perfil</h2>
+        </div>
 </section>
 
-<section class="blog-page" style="padding:40px 0;">
+<section class="blog-page">
     <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <h3>Mis Noticias</h3>
-                {% if user_posts %}
-                    {% for post in user_posts %}
-                        <div class="big-blog-item">
-                            <img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="#" class="blog-thumbnail" style="width:100%;height:200px;object-fit:cover;">
-                            <div class="blog-content text-box text-white">
-                                <h4>{{ post.title }}</h4>
-                                <p>{{ post.excerpt|truncatechars:150 }}</p>
-                                <a href="{% url 'post_single' post.id %}" class="read-more">Ver mas</a>
+        <div class="profile-cover"></div>
+        <div class="profile-card">
+            <div class="profile-meta">
+                <div class="profile-avatar">
+                    <img src="{% static 'img/games/no-image.svg' %}" alt="avatar">
+                </div>
+                <div class="profile-info" style="color: white;">
+                    <h2>{{ request.user.get_full_name|default:request.user.username }}</h2>
+                    <p>@{{ request.user.username }}</p>
+                    <div class="profile-stats">
+                        <div><strong>{{ user_posts.count }}</strong> Posts</div>
+                        <div><strong>{{ user_reviews.count }}</strong> Reseñas</div>
+                        <div><strong>{{ user_games.count }}</strong> Juegos</div>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <a href="#" class="site-btn">Profile settings</a>
+                </div>
+            </div>
+
+            <div style="margin-top:18px;">
+                <div class="profile-tabs" id="profile-tabs">
+                    <a class="tab-link active" data-tab="posts">Posts</a>
+                    <a class="tab-link" data-tab="reviews">Reseñas</a>
+                    <a class="tab-link" data-tab="games">Juegos</a>
+                </div>
+
+                <div id="tab-posts" class="tab-content" style="margin-top:18px;">
+                    {% if user_posts %}
+                        {% for post in user_posts %}
+                            <div class="post-card">
+                                <div style="display:flex;gap:12px;align-items:flex-start;">
+                                    <div style="flex:1">
+                                        <h4 style="margin:0;color:#fff">{{ post.title }}</h4>
+                                        <div style="color:#cfcfe2;font-size:13px;margin-top:6px;">{{ post.created_at|date:"d M Y" }} · {{ post.category }}</div>
+                                        <p style="margin-top:8px;color:#ddd">{{ post.excerpt|default:post.content|truncatechars:180 }}</p>
+                                        <a href="{% url 'post_single' post.id %}" class="read-more">Ver más</a>
+                                    </div>
+                                    <div style="width:220px;">
+                                        <img class="post-thumb" src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="thumb">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>No has publicado noticias aún.</p>
-                {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <p>No has publicado noticias aún.</p>
+                    {% endif %}
+                </div>
 
-                <h3 class="mt-4">Mis Reseñas</h3>
-                {% if user_reviews %}
-                    {% for r in user_reviews %}
-                        <div class="review-item">
-                            <h5>{{ r.title }} — {{ r.rating }}</h5>
-                            <p>{{ r.excerpt|truncatechars:150 }}</p>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>No has escrito reseñas aún.</p>
-                {% endif %}
+                <div id="tab-reviews" class="tab-content" style="display:none;margin-top:18px;">
+                    {% if user_reviews %}
+                        {% for r in user_reviews %}
+                            <div class="post-card">
+                                <h4 style="margin:0;color:#fff">{{ r.title }} <small style="color:#cfcfe2">— {{ r.rating }}</small></h4>
+                                <p style="color:#ddd">{{ r.excerpt|truncatechars:180 }}</p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No has escrito reseñas aún.</p>
+                    {% endif %}
+                </div>
 
-                <h3 class="mt-4">Mis Juegos</h3>
-                {% if user_games %}
-                    {% for g in user_games %}
-                        <div class="game-item">
-                            <h5>{{ g.title }}</h5>
-                            <p>{{ g.platform }} — {{ g.genre }}</p>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>No has agregado juegos aún.</p>
-                {% endif %}
+                <div id="tab-games" class="tab-content" style="display:none;margin-top:18px;">
+                    {% if user_games %}
+                        {% for g in user_games %}
+                            <div class="post-card">
+                                <h4 style="margin:0;color:#fff">{{ g.title }}</h4>
+                                <p style="color:#ddd">{{ g.platform }} — {{ g.genre }}</p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No has agregado juegos aún.</p>
+                    {% endif %}
+                </div>
 
             </div>
         </div>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    var links = document.querySelectorAll('.tab-link');
+    links.forEach(function(link){
+        link.addEventListener('click', function(){
+            document.querySelectorAll('.tab-link').forEach(function(l){l.classList.remove('active')});
+            link.classList.add('active');
+            var tab = link.getAttribute('data-tab');
+            document.querySelectorAll('.tab-content').forEach(function(tc){tc.style.display='none'});
+            document.getElementById('tab-'+tab).style.display='block';
+        });
+    });
+});
+</script>
 
 {% endblock %}
