@@ -53,7 +53,7 @@
                                         </form>
                                     </div>
                                     <div style="width:220px;">
-                                        <img class="post-thumb" src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="thumb">
+                                        <img class="post-thumb" src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="thumb">
                                     </div>
                                 </div>
                             </div>

@@ -17,7 +17,7 @@
 <section class="games-section spad">
     <div class="container">
         <div class="widget-item">
-            <form method="post" class="contact-form" novalidate>
+            <form method="post" class="contact-form" novalidate enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 {% for field in form %}

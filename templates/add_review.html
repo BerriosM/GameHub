@@ -18,7 +18,7 @@
 <section class="review-section">
     <div class="container">
         <div class="card" style="padding:20px; background-color: rgb(82, 19, 82);">
-            <form method="post" class="contact-form">
+            <form method="post" class="contact-form" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 {% for field in form %}

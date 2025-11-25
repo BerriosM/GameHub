@@ -55,10 +55,8 @@ class AddGameView(LoginRequiredMixin, GenericCreateView):
     success_url = reverse_lazy('games')
 
     def form_valid(self, form):
-        # assign current user as author
-        obj = form.save(commit=False)
-        obj.author = self.request.user
-        obj.save()
+        # assign current user as author and let the base class save the object
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
 def review(request):
@@ -73,9 +71,7 @@ class AddReviewView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('review')
 
     def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.author = self.request.user
-        obj.save()
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
 def blog(request):
@@ -109,9 +105,7 @@ class AddNewsView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('blog')
 
     def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.author = self.request.user
-        obj.save()
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
 

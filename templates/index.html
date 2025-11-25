@@ -62,7 +62,7 @@
 				{% for post in posts %}
 				<div class="blog-item">
 					<div class="blog-thumb">
-						<img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"
+						<img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"
 							alt="#">
 					</div>
 					<div class="blog-text text-box text-white">
@@ -123,7 +123,7 @@
 
 <!-- Featured section -->
 <section class="featured-section">
-	<div class="featured-bg set-bg" data-setbg="{% if latest_game and latest_game.image %}{% static 'img/games/' %}{{ latest_game.image }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"></div>
+	<div class="featured-bg set-bg" data-setbg="{% if latest_game and latest_game.image %}{{ latest_game.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"></div>
 	<div class="featured-box">
 		<div class="text-box">
 			<div class="top-meta">Estreno destacado · <a href="{% url 'games' %}">Juegos</a></div>

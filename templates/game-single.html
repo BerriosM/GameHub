@@ -6,7 +6,7 @@
 
 
 	<!-- Page top section -->
-	<section class="page-top-section set-bg" data-setbg="{% if game.image %}{% static 'img/games/' %}{{ game.image }}{% else %}{% static 'img/page-top-bg/1.jpg' %}{% endif %}">
+	<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/1.jpg' %}">
 		<div class="page-info">
 			<h2>{% if game.title %}{{ game.title }}{% else %}Juego{% endif %}</h2>
 			<div class="site-breadcrumb">
@@ -23,7 +23,7 @@
 		<div class="container">
 			<div class="game-single-preview">
 				{% if game.image %}
-				<img alt="{{ game.title }}" style="width:100%;height:420px;object-fit:cover;" src="{% static 'img/games/' %}{{ game.image }}">
+				<img alt="{{ game.title }}" style="width:100%;height:420px;object-fit:cover;" src="{{ game.image.url }}">
 				{% else %}
 				<img src="{% static 'img/games/no-image.svg' %}" alt="{{ game.title }}">
 				{% endif %}
@@ -48,7 +48,7 @@
 							<div class="row">
 								<div class="col-lg-2">
 									<div class="review-pic">
-										<img src="{% if r.image %}{% static r.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="" style="width:100%;height:60px;object-fit:cover;">
+										<img src="{% if r.image %}{{ r.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="" style="width:100%;height:60px;object-fit:cover;">
 									</div>
 								</div>
 								<div class="col-lg-10">
@@ -69,7 +69,6 @@
 				</div>
 				<div class="col-xl-3 col-lg-4 col-md-5 sidebar game-page-sideber">
 					<div id="stickySidebar">
-						<a href="{% url 'review_add' %}" class="btn btn-primary" style="margin:10px 0; display:block;">Agregar reseña</a>
 						<div class="widget-item">
 							<div class="rating-widget">
 								<h4 class="widget-title">Ratings</h4>

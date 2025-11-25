@@ -34,7 +34,7 @@
 				{% if posts %}
 				{% for post in posts %}
 				<div class="big-blog-item">
-					<img src="{% if post.image %}{% static post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"
+					<img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"
 						alt="#" class="blog-thumbnail" style="width:100%;height:420px;object-fit:cover;">
 					<div class="blog-content text-box text-white">
 						<div class="top-meta">{{ post.created_at|date:"d.m.Y" }} / in <a href="">{{ post.category }}</a>
@@ -83,7 +83,7 @@
 							{% if latest_comments %}
 								{% for comment in latest_comments %}
 									<div class="lc-item">
-										<img src="{% if comment.post.image %}{% static comment.post.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" class="lc-avatar" alt="#">
+										<img src="{% if comment.post.image %}{{ comment.post.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" class="lc-avatar" alt="#">
 										<div class="tw-text"><a href="{% url 'post_single' comment.post.id %}">{{ comment.post.title|truncatechars:30 }}</a> <span>:</span> {{ comment.content|truncatechars:40 }}</div>
 									</div>
 								{% endfor %}
