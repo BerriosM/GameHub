@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView as GenericCreateView
 from django.http import HttpResponseForbidden
 
 from .models import Game, BlogPost, Review, Comment
+from django.contrib.auth import get_user_model
 from django.db.models import Avg
 from .forms import GameForm, BlogPostForm, ReviewForm, CommentForm
 
@@ -28,8 +29,15 @@ def main(request):
     return render(request, 'index.html', {'posts': posts, 'latest_game': latest_game})
 
 def games(request):
+    # support optional filtering by genre and/or platform via query params
+    genre = request.GET.get('genre')
+    platform = request.GET.get('platform')
     games = Game.objects.order_by('-created_at')
-    return render(request, 'games.html', {'games': games})
+    if genre:
+        games = games.filter(genre=genre)
+    if platform:
+        games = games.filter(platform=platform)
+    return render(request, 'games.html', {'games': games, 'current_genre': genre, 'current_platform': platform})
 
 def game_single(request, pk):
     game = get_object_or_404(Game, pk=pk)
@@ -75,9 +83,14 @@ class AddReviewView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 def blog(request):
-    posts = BlogPost.objects.order_by('-created_at')
+    # support optional filtering by category via ?category=CategoriaName
+    category = request.GET.get('category')
+    if category:
+        posts = BlogPost.objects.filter(category=category).order_by('-created_at')
+    else:
+        posts = BlogPost.objects.order_by('-created_at')
     latest_comments = Comment.objects.select_related('post').order_by('-created_at')[:4]
-    return render(request, 'blog.html', {'posts': posts, 'latest_comments': latest_comments})
+    return render(request, 'blog.html', {'posts': posts, 'latest_comments': latest_comments, 'current_category': category})
 
 def post_single(request, pk):
     post = get_object_or_404(BlogPost, pk=pk)
@@ -116,9 +129,31 @@ def profile(request):
     user_reviews = Review.objects.filter(author=user).order_by('-created_at')
     user_posts = BlogPost.objects.filter(author=user).order_by('-created_at')
     return render(request, 'profile.html', {
+        'profile_user': user,
         'user_games': user_games,
         'user_reviews': user_reviews,
         'user_posts': user_posts,
+        'is_owner': True,
+    })
+
+
+@login_required
+def user_profile(request, username):
+    """View another user's profile. Renders the same `profile.html` template but with
+    `profile_user` set to the requested user and `is_owner` False when the viewer is different.
+    """
+    User = get_user_model()
+    profile_user = get_object_or_404(User, username=username)
+    user_games = Game.objects.filter(author=profile_user).order_by('-created_at')
+    user_reviews = Review.objects.filter(author=profile_user).order_by('-created_at')
+    user_posts = BlogPost.objects.filter(author=profile_user).order_by('-created_at')
+    is_owner = (request.user == profile_user)
+    return render(request, 'profile.html', {
+        'profile_user': profile_user,
+        'user_games': user_games,
+        'user_reviews': user_reviews,
+        'user_posts': user_posts,
+        'is_owner': is_owner,
     })
 
 

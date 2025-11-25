@@ -34,10 +34,12 @@
 				{% if posts %}
 				{% for post in posts %}
 				<div class="big-blog-item">
-					<img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"
-						alt="#" class="blog-thumbnail" style="width:100%;height:420px;object-fit:cover;">
+					<a href="{% url 'blog' %}?category={{ post.category|urlencode }}">
+						<img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"
+							alt="#" class="blog-thumbnail" style="width:100%;height:420px;object-fit:cover;">
+					</a>
 					<div class="blog-content text-box text-white">
-						<div class="top-meta">{{ post.created_at|date:"d.m.Y" }} / in <a href="">{{ post.category }}</a>
+						<div class="top-meta">{{ post.created_at|date:"d.m.Y" }} / in <a href="{% url 'blog' %}?category={{ post.category|urlencode }}">{{ post.category }}</a>
 						</div>
 						<h3>{{ post.title }}</h3>
 						<p>{{ post.content|truncatechars:250 }}</p>
@@ -83,7 +85,9 @@
 							{% if latest_comments %}
 								{% for comment in latest_comments %}
 									<div class="lc-item">
-										<img src="{% if comment.post.image %}{{ comment.post.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" class="lc-avatar" alt="#">
+										<a href="{% url 'blog' %}?category={{ comment.post.category|urlencode }}">
+											<img src="{% if comment.post.image %}{{ comment.post.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" class="lc-avatar" alt="#">
+										</a>
 										<div class="tw-text"><a href="{% url 'post_single' comment.post.id %}">{{ comment.post.title|truncatechars:30 }}</a> <span>:</span> {{ comment.content|truncatechars:40 }}</div>
 									</div>
 								{% endfor %}

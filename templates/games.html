@@ -53,8 +53,10 @@
 					{% for game in games %}
 					<div class="col-lg-4 col-md-6">
 						<div class="game-item">
-							<img alt="{{ game.title }}" style="width:100%;height:220px;object-fit:cover;" 
-								src="{% if game.image %}{{ game.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}">
+							<a href="{% url 'games' %}?genre={{ game.genre|urlencode }}">
+								<img alt="{{ game.title }}" style="width:100%;height:220px;object-fit:cover;" 
+									src="{% if game.image %}{{ game.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}">
+							</a>
 							<h5>{{ game.title }}</h5>
 							<a href="{% url 'game_single' game.id %}" class="read-more">Ver mas <img
 									src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>

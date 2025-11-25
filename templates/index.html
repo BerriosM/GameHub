@@ -107,20 +107,6 @@
 <!-- Blog section end -->
 
 
-<!-- Intro section -->
-<section class="intro-video-section set-bg d-flex align-items-end " data-setbg="{% static './img/promo-bg.jpg' %}">
-	<a href="https://www.youtube.com/watch?v=uFsGy5x_fyQ" class="video-play-btn video-popup"><img
-			src="{% static 'img/icons/solid-right-arrow.png' %}" alt="#"></a>
-	<div class="container">
-		<div class="video-text">
-			<h2>Promo video of the game</h2>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-		</div>
-	</div>
-</section>
-<!-- Intro section end -->
-
-
 <!-- Featured section -->
 <section class="featured-section">
 	<div class="featured-bg set-bg" data-setbg="{% if latest_game and latest_game.image %}{{ latest_game.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"></div>
