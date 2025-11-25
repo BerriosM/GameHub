@@ -15,4 +15,7 @@ urlpatterns = [
     path('review-single/<int:pk>/', views.review_single, name='review_single'),
     path('signup/', views.SignUpView.as_view(), name='signup'),
     path('contact/', views.contact, name='contact'),
+    path('games/delete/<int:pk>/', views.delete_game, name='game_delete'),
+    path('review/delete/<int:pk>/', views.delete_review, name='review_delete'),
+    path('blog/delete/<int:pk>/', views.delete_post, name='post_delete'),
 ]

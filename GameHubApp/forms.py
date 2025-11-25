@@ -33,10 +33,12 @@ class GameForm(forms.ModelForm):
                                  widget=forms.Select(attrs={'class': 'form-control'}))
     genre = forms.ChoiceField(choices=GENRE_CHOICES,
                               widget=forms.Select(attrs={'class': 'form-control'}))
+    price = forms.DecimalField(max_digits=8, decimal_places=2, min_value=0, required=False,
+                               widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}))
 
     class Meta:
         model = Game
-        fields = ['title', 'platform', 'genre', 'description']
+        fields = ['title', 'platform', 'genre', 'description', 'price']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título del juego'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Descripción'}),

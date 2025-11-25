@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic.edit import CreateView as GenericCreateView
+from django.http import HttpResponseForbidden
 
 from .models import Game, BlogPost, Review, Comment
 from django.db.models import Avg
@@ -128,3 +129,36 @@ def profile(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
+
+@login_required
+def delete_game(request, pk):
+    game = get_object_or_404(Game, pk=pk)
+    if game.author != request.user:
+        return HttpResponseForbidden("No tienes permiso para eliminar este juego.")
+    if request.method == 'POST':
+        game.delete()
+        return redirect('profile')
+    return render(request, 'confirm_delete.html', {'object': game, 'type': 'juego'})
+
+
+@login_required
+def delete_review(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    if review.author != request.user:
+        return HttpResponseForbidden("No tienes permiso para eliminar esta reseña.")
+    if request.method == 'POST':
+        review.delete()
+        return redirect('profile')
+    return render(request, 'confirm_delete.html', {'object': review, 'type': 'reseña'})
+
+
+@login_required
+def delete_post(request, pk):
+    post = get_object_or_404(BlogPost, pk=pk)
+    if post.author != request.user:
+        return HttpResponseForbidden("No tienes permiso para eliminar esta publicación.")
+    if request.method == 'POST':
+        post.delete()
+        return redirect('profile')
+    return render(request, 'confirm_delete.html', {'object': post, 'type': 'publicación'})

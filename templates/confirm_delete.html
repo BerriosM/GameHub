@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<section class="page-top-section set-bg">
+    <div class="page-info">
+        <h2>Confirmar eliminación</h2>
+    </div>
+</section>
+
+<section class="games-section spad">
+    <div class="container">
+        <div class="widget-item">
+            <h4>¿Estás seguro que quieres eliminar esta {{ type }}?</h4>
+            <p>{{ object }}</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="site-btn">Sí, eliminar</button>
+                <a href="{% url 'profile' %}" class="site-btn" style="background:#999;margin-left:8px;">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
