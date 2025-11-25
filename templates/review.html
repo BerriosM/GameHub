@@ -69,7 +69,7 @@
 						<div class="top-meta">{{ r.created_at|date:"d.m.Y" }} / en <a href="">{% if r.game %}Juegos{% else %}Juegos{% endif %}</a></div>
 						<h3>{{ r.title }}</h3>
 						<p>{{ r.content|truncatechars:250 }}</p>
-						<a href="#" class="read-more">Ver mas <img src="{% static 'img/icons/double-arrow.png' %}"
+						<a href="{% url 'review_single' r.pk %}" class="read-more">Ver mas <img src="{% static 'img/icons/double-arrow.png' %}"
 								alt="#" /></a>
 					</div>
 				</div>

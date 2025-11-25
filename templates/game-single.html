@@ -30,7 +30,7 @@
 			</div>
 			<div class="row">
 				<div class="col-xl-9 col-lg-8 col-md-7 game-single-content">
-					<div class="gs-meta">{% if game.created_at %}{{ game.created_at|date:"d.m.Y" }}{% else %}--/--/----{% endif %} / in <a href="#">Juegos</a></div>
+					<div class="gs-meta">{% if game.created_at %}{{ game.created_at|date:"d.m.Y" }}{% else %}--/--/----{% endif %} / in <a href="#">Juegos</a> / por <strong>{% if game.author %}{{ game.author.get_full_name|default:game.author.username }}{% else %}Anónimo{% endif %}</strong></div>
 					<h2 class="gs-title">{% if game.title %}{{ game.title }}{% else %}Juego{% endif %}</h2>
 					<div class="game-meta-options" style="margin-bottom:10px; color: white;">
 						<span style="display:inline-block;margin-right:12px;"><strong>Plataforma:</strong> {% if game.platform %}{{ game.platform }}{% else %}N/A{% endif %}</span>
@@ -56,7 +56,7 @@
 										<div class="rating"><span>{{ r.rating }}</span> / 5</div>
 										<h5>{{ r.title }}</h5>
 										<p>{{ r.content|truncatechars:200 }}</p>
-										<div class="top-meta">{{ r.created_at|date:"d.m.Y" }} / por <strong>{{ r.author_name|default:"Anónimo" }}</strong></div>
+										<div class="top-meta">{{ r.created_at|date:"d.m.Y" }} / por <strong>{% if r.author %}{{ r.author.get_full_name|default:r.author.username }}{% else %}Anónimo{% endif %}</strong></div>
 									</div>
 								</div>
 							</div>
@@ -90,7 +90,7 @@
 								{% if reviews %}
 								<div class="testim-text">
 									<p>{{ reviews.0.content|truncatechars:120 }}</p>
-									<h6><span>{{ reviews.0.author_name|default:"Anónimo" }},</span> Usuario</h6>
+									<h6><span>{% if reviews.0.author %}{{ reviews.0.author.get_full_name|default:reviews.0.author.username }}{% else %}Anónimo{% endif %},</span> Usuario</h6>
 								</div>
 								{% else %}
 								<p>No hay comentarios aún.</p>

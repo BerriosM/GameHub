@@ -17,9 +17,9 @@
                 <div class="big-blog-item">
                     <img src="{% if review.image %}{% static review.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="#" class="blog-thumbnail" style="width:100%;height:320px;object-fit:cover;">
                     <div class="blog-content text-box text-dark" style="background:transparent; padding:20px;">
-                        <div class="top-meta">{{ review.created_at|date:"d.m.Y" }}</div>
+                        <div class="top-meta">{{ review.created_at|date:"d.m.Y" }} / por <strong>{% if review.author %}{{ review.author.get_full_name|default:review.author.username }}{% else %}Anónimo{% endif %}</strong></div>
                         <h2 class="gs-title">{{ review.title }}</h2>
-                        <p><strong>Juego:</strong> {{ review.game.title if review.game else "--" }}</p>
+                        <p><strong>Juego:</strong> {% if review.game %}{{ review.game.title }}{% else %}--{% endif %}</p>
                         <p>{{ review.content }}</p>
                     </div>
                 </div>
