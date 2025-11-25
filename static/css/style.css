@@ -327,50 +327,13 @@ ol {
 
 .header-bar-warp {
 	background: #081624;
-	padding: 20px 40px 0;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+	padding: 39px 40px 0;
 	-webkit-box-shadow: 0 0 9px 3px rgba(226, 30, 228, 0.24);
 	box-shadow: 0 0 9px 3px rgba(226, 30, 228, 0.24);
 }
 
 .site-logo {
-	float: none;
-	display: flex;
-	align-items: center;
-}
-
-/* Make the header logo image smaller and responsive */
-.site-logo img {
-	max-height: 64px; /* reduce header logo height */
-	width: auto;
-	display: block;
-	vertical-align: middle;
-}
-
-/* Smaller logo on narrow screens */
-@media (max-width: 991px) {
-	.header-bar-warp {
-		padding: 20px 20px 0;
-	}
-	.site-logo img {
-		max-height: 48px;
-	}
-}
-
-@media (max-width: 767px) {
-	.site-logo img {
-		max-height: 40px;
-	}
-	.top-nav-area { /* allow menu to wrap under logo on very small screens */
-		flex: 1 1 100%;
-	}
-}
-
-/* ensure nav expands in the flex header */
-.top-nav-area {
-	flex: 1 1 auto;
+	float: left;
 }
 
 .user-panel {
