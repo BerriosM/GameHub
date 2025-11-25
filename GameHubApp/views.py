@@ -23,7 +23,9 @@ class SignUpView(CreateView):
 def main(request):
     # show latest 3 blog posts on the homepage
     posts = BlogPost.objects.order_by('-created_at')[:3]
-    return render(request, 'index.html', {'posts': posts})
+    # latest game to feature on the homepage
+    latest_game = Game.objects.order_by('-created_at').first()
+    return render(request, 'index.html', {'posts': posts, 'latest_game': latest_game})
 
 def games(request):
     games = Game.objects.order_by('-created_at')
