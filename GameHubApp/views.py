@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView as GenericCreateView
 from django.http import HttpResponseForbidden
 
 from .models import Game, BlogPost, Review, Comment
+from django.db.models import Q
 from django.contrib.auth import get_user_model
 from django.db.models import Avg
 from .forms import GameForm, BlogPostForm, ReviewForm, CommentForm
@@ -104,8 +105,13 @@ class AddGameView(LoginRequiredMixin, GenericCreateView):
         return super().form_valid(form)
 
 def review(request):
+    q = request.GET.get('q')
     reviews = Review.objects.order_by('-created_at')
-    return render(request, 'review.html', {'reviews': reviews})
+    if q:
+        reviews = reviews.filter(
+            Q(title__icontains=q) | Q(content__icontains=q) | Q(game__title__icontains=q)
+        )
+    return render(request, 'review.html', {'reviews': reviews, 'current_q': q})
 
 
 class AddReviewView(LoginRequiredMixin, CreateView):
