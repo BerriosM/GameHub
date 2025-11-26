@@ -136,6 +136,12 @@ def post_single(request, pk):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
+            # set the comment name server-side if user is authenticated
+            if request.user.is_authenticated:
+                comment.name = request.user.get_full_name() or request.user.username
+            else:
+                # fallback to anonymous
+                comment.name = 'Anónimo'
             comment.save()
             return redirect('post_single', pk=pk)
     else:
