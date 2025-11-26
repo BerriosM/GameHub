@@ -19,4 +19,7 @@ urlpatterns = [
     path('games/delete/<int:pk>/', views.delete_game, name='game_delete'),
     path('review/delete/<int:pk>/', views.delete_review, name='review_delete'),
     path('blog/delete/<int:pk>/', views.delete_post, name='post_delete'),
+    path('games/edit/<int:pk>/', views.GameEditView.as_view(), name='game_edit'),
+    path('review/edit/<int:pk>/', views.ReviewEditView.as_view(), name='review_edit'),
+    path('blog/edit/<int:pk>/', views.PostEditView.as_view(), name='post_edit'),
 ]

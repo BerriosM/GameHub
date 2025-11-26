@@ -669,6 +669,18 @@ ol {
 	.post-content .gs-title { font-size: 26px; }
 }
 
+/* Profile: ensure small action buttons show dark text for legibility */
+.profile-wrapper .site-btn {
+	color: #081624 !important; /* dark text */
+}
+.profile-wrapper .site-btn img {
+	filter: none !important;
+}
+.profile-wrapper .site-btn[style*="background"] {
+	/* when a button has a colored background, keep text black but ensure enough padding */
+	color: #081624 !important;
+}
+
 
 /*------------------
   Hero section

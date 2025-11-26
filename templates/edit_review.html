@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block contenido %}
+<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/3.jpg' %}">
+    <div class="page-info">
+        <h2>Editar Reseña</h2>
+    </div>
+</section>
+<section class="blog-page">
+    <div class="container">
+        <div class="col-md-8">
+            <div class="card" style="padding:20px;">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {% for field in form %}
+                        <div class="form-group">
+                            <label class="contact-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% for error in field.errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="site-btn">Guardar cambios <img src="{% static 'img/icons/double-arrow.png' %}" alt="#"/></button>
+                    <a href="{% url 'profile' %}" class="site-btn" style="background:#999;margin-left:8px;">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

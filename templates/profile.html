@@ -47,10 +47,11 @@
                                         <p style="margin-top:8px;color:#ddd">{{ post.content|truncatechars:180 }}</p>
                                         <a href="{% url 'post_single' post.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;">Detalles</a>
                                         {% if is_owner %}
-                                        <form method="post" action="{% url 'post_delete' post.id %}" style="display:inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;">Eliminar</button>
-                                        </form>
+                                            <a href="{% url 'post_edit' post.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;background:#4a90e2;color:#fff;">Editar</a>
+                                            <form method="post" action="{% url 'post_delete' post.id %}" style="display:inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;background:#c0392b;color:#fff;">Eliminar</button>
+                                            </form>
                                         {% endif %}
                                     </div>
                                     <div style="width:220px;">
@@ -80,10 +81,11 @@
                                     <div>
                                         <a href="{% url 'review_single' r.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;">Detalles</a>
                                         {% if is_owner %}
-                                        <form method="post" action="{% url 'review_delete' r.id %}" style="display:inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;background:#c0392b;">Eliminar</button>
-                                        </form>
+                                            <a href="{% url 'review_edit' r.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;background:#4a90e2;color:#000000;">Editar</a>
+                                            <form method="post" action="{% url 'review_delete' r.id %}" style="display:inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;background:#c0392b;color:#000000;">Eliminar</button>
+                                            </form>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -110,10 +112,11 @@
                                     <div>
                                         <a href="{% url 'game_single' g.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;">Detalles</a>
                                         {% if is_owner %}
-                                        <form method="post" action="{% url 'game_delete' g.id %}" style="display:inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;background:#c0392b;">Eliminar</button>
-                                        </form>
+                                            <a href="{% url 'game_edit' g.id %}" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;background:#4a90e2;color:#fff;">Editar</a>
+                                            <form method="post" action="{% url 'game_delete' g.id %}" style="display:inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="site-btn" style="padding:8px 12px;min-width:90px;margin-left:8px;background:#c0392b;color:#fff;">Eliminar</button>
+                                            </form>
                                         {% endif %}
                                     </div>
                                 </div>

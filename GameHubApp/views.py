@@ -11,6 +11,39 @@ from .models import Game, BlogPost, Review, Comment
 from django.contrib.auth import get_user_model
 from django.db.models import Avg
 from .forms import GameForm, BlogPostForm, ReviewForm, CommentForm
+from django.views.generic.edit import UpdateView
+
+
+# Edit views (UpdateView) with ownership enforcement
+class GameEditView(LoginRequiredMixin, UpdateView):
+    model = Game
+    form_class = GameForm
+    template_name = 'edit_game.html'
+    success_url = reverse_lazy('profile')
+
+    def get_queryset(self):
+        # limit queryset to objects owned by the current user
+        return Game.objects.filter(author=self.request.user)
+
+
+class ReviewEditView(LoginRequiredMixin, UpdateView):
+    model = Review
+    form_class = ReviewForm
+    template_name = 'edit_review.html'
+    success_url = reverse_lazy('profile')
+
+    def get_queryset(self):
+        return Review.objects.filter(author=self.request.user)
+
+
+class PostEditView(LoginRequiredMixin, UpdateView):
+    model = BlogPost
+    form_class = BlogPostForm
+    template_name = 'edit_post.html'
+    success_url = reverse_lazy('profile')
+
+    def get_queryset(self):
+        return BlogPost.objects.filter(author=self.request.user)
 
 
 # Login
