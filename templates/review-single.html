@@ -15,12 +15,22 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="big-blog-item">
-                    <img src="{% if review.image %}{% static review.image %}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="#" class="blog-thumbnail" style="width:100%;height:320px;object-fit:cover;">
-                    <div class="blog-content text-box text-dark" style="background:transparent; padding:20px; color: white;">
-                        <div class="top-meta" style="color: white;">{{ review.created_at|date:"d.m.Y" }} / por <strong>{% if review.author %}<a href="{% url 'user_profile' review.author.username %}">{{ review.author.get_full_name|default:review.author.username }}</a>{% else %}Anónimo{% endif %}</strong></div>
-                        <h3><strong>Juego:</strong> {% if review.game %}{{ review.game.title }}{% else %}--{% endif %}</h3>
+                    <div class="review-image-wrap">
+                        {% if review.image %}
+                            <img src="{{ review.image.url }}" alt="{{ review.title }}" class="blog-thumbnail">
+                        {% else %}
+                            <img src="{% static 'img/games/no-image.svg' %}" alt="No image available" class="blog-thumbnail placeholder">
+                        {% endif %}
+                        <div class="image-overlay"></div>
+                    </div>
+
+                    <div class="blog-content text-box review-content">
+                        <div class="top-meta">{{ review.created_at|date:"d.m.Y" }} / por <strong>{% if review.author %}<a href="{% url 'user_profile' review.author.username %}">{{ review.author.get_full_name|default:review.author.username }}</a>{% else %}Anónimo{% endif %}</strong></div>
+                        <h3 class="meta-game"><strong>Juego:</strong> {% if review.game %}{{ review.game.title }}{% else %}--{% endif %}</h3>
                         <h2 class="gs-title">{{ review.title }}</h2>
-                        <p>{{ review.content }}</p>
+                        <div class="review-body">
+                            <p>{{ review.content }}</p>
+                        </div>
                     </div>
                 </div>
             </div>

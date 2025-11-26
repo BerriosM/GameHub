@@ -466,9 +466,11 @@ ol {
 	padding: 28px;
 	border-radius: 6px;
 }
+
 .contact-form .form-group {
 	margin-bottom: 22px;
 }
+
 .contact-label {
 	display: block;
 	font-style: italic;
@@ -478,6 +480,7 @@ ol {
 	margin-bottom: 12px;
 	letter-spacing: 0.6px;
 }
+
 .contact-form input[type="text"],
 .contact-form input[type="email"],
 .contact-form input[type="number"],
@@ -494,20 +497,131 @@ ol {
 	box-shadow: none;
 	-webkit-appearance: none;
 }
-.contact-form textarea { min-height: 200px; resize: vertical; }
-.contact-form input[type="file"] { padding: 8px 6px; background: transparent; border: none; }
-.contact-form ::placeholder { color: #9b9b9b; font-style: normal; text-transform: none; }
-.contact-form .text-danger { margin-top: 6px; color: #d63950; font-weight: 600; }
+
+.contact-form textarea {
+	min-height: 200px;
+	resize: vertical;
+}
+
+.contact-form input[type="file"] {
+	padding: 8px 6px;
+	background: transparent;
+	border: none;
+}
+
+.contact-form ::placeholder {
+	color: #9b9b9b;
+	font-style: normal;
+	text-transform: none;
+}
+
+.contact-form .text-danger {
+	margin-top: 6px;
+	color: #d63950;
+	font-weight: 600;
+}
 
 /* Make site-btn a bit smaller on forms and keep the purple shadow */
-.contact-form .site-btn { min-width: 160px; padding: 18px 26px; }
+.contact-form .site-btn {
+	min-width: 160px;
+	padding: 18px 26px;
+}
 
 /* Responsive tweaks */
 @media (max-width: 767px) {
-	.contact-form { padding: 20px; }
-	.contact-label { margin-bottom: 8px; }
-	.contact-form .site-btn { width: 100%; display:block; margin-bottom: 10px; }
+	.contact-form {
+		padding: 20px;
+	}
+
+	.contact-label {
+		margin-bottom: 8px;
+	}
+
+	.contact-form .site-btn {
+		width: 100%;
+		display: block;
+		margin-bottom: 10px;
+	}
 }
+
+/* Review single page styles */
+.review-image-wrap {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	border-radius: 6px;
+	box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+.review-image-wrap .blog-thumbnail {
+	display: block;
+	width: 100%;
+	height: 420px;
+	object-fit: cover;
+	transition: transform 0.6s ease;
+}
+
+.review-image-wrap .blog-thumbnail.placeholder {
+	background: #f5f5f5;
+	object-fit: contain;
+	height: 320px;
+	padding: 36px 0;
+}
+
+.review-image-wrap:hover .blog-thumbnail {
+	transform: scale(1.03);
+}
+
+.image-overlay {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.48) 100%);
+	pointer-events: none;
+}
+
+.review-content {
+	background: transparent;
+	padding: 26px 18px 10px 18px;
+	color: #fff;
+	margin-top: 18px;
+}
+
+.review-content .top-meta {
+	color: #f3d9ff;
+	margin-bottom: 12px;
+	font-weight: 600;
+}
+
+.review-content .meta-game {
+	color: #ffffff;
+	margin-bottom: 6px;
+}
+
+.review-content .gs-title {
+	font-size: 34px;
+	margin: 6px 0 14px;
+	color: #fff;
+}
+
+.review-body p {
+	font-size: 16px;
+	color: #ffffff;
+	line-height: 1.7;
+}
+
+@media (max-width: 991px) {
+	.review-image-wrap .blog-thumbnail {
+		height: 300px;
+	}
+
+	.review-content .gs-title {
+		font-size: 26px;
+	}
+}
+
 
 /*------------------
   Hero section
@@ -2036,6 +2150,6 @@ ol {
 	.profile-card {
 		margin-top: 10px;
 		background-color: #000;
-		
+
 	}
 }
