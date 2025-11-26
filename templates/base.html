@@ -3,7 +3,7 @@
 <html lang="es">
 
 <head>
-	<title>EndGam - Gaming Magazine Template</title>
+	<title>GameHub</title>
 	<meta charset="UTF-8">
 	<meta name="description" content="EndGam Gaming Magazine Template">
 	<meta name="keywords" content="endGam,gGaming, magazine, html">
@@ -54,7 +54,7 @@
 			<div class="header-bar-warp d-flex">
 				<!-- site logo -->
 				<a href="{% url 'main' %}" class="site-logo">
-					<img src="{% static './img/logo.png' %}" alt="">
+					<img src="{% static 'img/logo.svg' %}" alt="GameHub">
 				</a>
 				<nav class="top-nav-area w-100">
 					{% if user.is_authenticated %}
@@ -126,7 +126,7 @@
 				<img src="{% static 'img/footer-right-pic.png' %}" alt="">
 			</div>
 			<a href="#" class="footer-logo">
-				<img src="{% static './img/logo.png' %}" alt="">
+				<img src="{% static 'img/logo.svg' %}" alt="GameHub">
 			</a>
 			<ul class="main-menu footer-menu">
 				<li><a href="{% url 'main' %}">Inicio</a></li>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="48" viewBox="0 0 220 48" role="img" aria-label="GameHub logo">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ff6ec7"/>
+      <stop offset="100%" stop-color="#9b1bb0"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="transparent" />
+  <text x="12" y="34" font-family="Roboto, Arial, sans-serif" font-weight="800" font-size="28" fill="url(#g1)">Game</text>
+  <text x="108" y="34" font-family="Roboto, Arial, sans-serif" font-weight="800" font-size="28" fill="#ffffff">Hub</text>
+  <!-- subtle stroke for contrast -->
+  <text x="12" y="34" font-family="Roboto, Arial, sans-serif" font-weight="800" font-size="28" fill="none" stroke="#000000" stroke-opacity="0.08" stroke-width="1">Game</text>
+  <text x="108" y="34" font-family="Roboto, Arial, sans-serif" font-weight="800" font-size="28" fill="none" stroke="#000000" stroke-opacity="0.08" stroke-width="1">Hub</text>
+</svg>
