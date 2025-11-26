@@ -21,11 +21,19 @@
 		<div class="row">
 			<div class="col-xl-9 col-lg-8 col-md-7">
 				<div class="big-blog-item">
-					<img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}" alt="#" class="blog-thumbnail" style="width:100%;height:420px;object-fit:cover;">
-					<div class="blog-content text-box text-dark" style="background:transparent; padding:20px;">
+					<div class="post-image-wrap">
+						{% if post.image %}
+							<img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-thumbnail">
+						{% else %}
+							<img src="{% static 'img/games/no-image.svg' %}" alt="No image available" class="blog-thumbnail placeholder">
+						{% endif %}
+						<div class="image-overlay"></div>
+					</div>
+
+					<div class="blog-content text-box post-content">
 						<div class="top-meta">{% if post.created_at %}{{ post.created_at|date:"d.m.Y" }}{% endif %} / por <strong>{% if post.author %}<a href="{% url 'user_profile' post.author.username %}">{{ post.author.get_full_name|default:post.author.username }}</a>{% else %}Anónimo{% endif %}</strong>{% if post.category %} / in <a href="#">{{ post.category }}</a>{% endif %}</div>
-						<h2 class="gs-title" style="color: white;">{% if post.title %}{{ post.title }}{% else %}Noticia{% endif %}</h2>
-						{{ post.content|linebreaksbr }}
+						<h2 class="gs-title">{% if post.title %}{{ post.title }}{% else %}Noticia{% endif %}</h2>
+						<div class="post-body">{{ post.content|linebreaksbr }}</div>
 					</div>
 				</div>
 
