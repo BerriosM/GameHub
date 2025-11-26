@@ -30,17 +30,37 @@ GENRE_CHOICES = [
 
 class GameForm(forms.ModelForm):
     # Reemplazamos los inputs de texto por selects
-    platform = forms.ChoiceField(choices=PLATFORM_CHOICES,
-                                 widget=forms.Select(attrs={'class': 'form-control'}))
-    genre = forms.ChoiceField(choices=GENRE_CHOICES,
-                              widget=forms.Select(attrs={'class': 'form-control'}))
-    price = forms.DecimalField(max_digits=8, decimal_places=2, min_value=0, required=False,
-                               widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}))
-    image = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}))
+    platform = forms.ChoiceField(
+        choices=PLATFORM_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label='Plataforma'
+    )
+    genre = forms.ChoiceField(
+        choices=GENRE_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label='Género'
+    )
+    price = forms.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        min_value=0,
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+        label='Precio'
+    )
+    image = forms.ImageField(
+        required=False,
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+        label='Imagen'
+    )
 
     class Meta:
         model = Game
         fields = ['title', 'platform', 'genre', 'description', 'price', 'image']
+        labels = {
+            'title': 'Título',
+            'description': 'Descripción',
+        }
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título del juego'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Descripción'}),
@@ -57,6 +77,12 @@ class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
         fields = ['title', 'category', 'image', 'content']
+        labels = {
+            'title': 'Título de la noticia',
+            'category': 'Categoría',
+            'image': 'Imagen',
+            'content': 'Contenido',
+        }
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la noticia'}),
             'category': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Categoría'}),
@@ -70,6 +96,13 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['game', 'title', 'rating', 'image', 'content']
+        labels = {
+            'game': 'Juego',
+            'title': 'Título de la reseña',
+            'rating': 'Puntuación',
+            'image': 'Imagen',
+            'content': 'Contenido',
+        }
         widgets = {
             'game': forms.Select(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título de la reseña'}),
@@ -85,6 +118,9 @@ class CommentForm(forms.ModelForm):
         model = Comment
         # only request comment content from the user; name will be set server-side
         fields = ['content']
+        labels = {
+            'content': 'Comentario',
+        }
         widgets = {
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Escribe tu comentario...'})
         }
