@@ -88,14 +88,14 @@
 <!-- Blog section end -->
 
 
+{% if latest_game %}
 <!-- Featured section -->
 <section class="featured-section">
-	<div class="featured-bg set-bg" data-setbg="{% if latest_game and latest_game.image %}{{ latest_game.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"></div>
+	<div class="featured-bg set-bg" data-setbg="{% if latest_game.image %}{{ latest_game.image.url }}{% else %}{% static 'img/games/no-image.svg' %}{% endif %}"></div>
 	<div class="featured-box">
 		<div class="text-box">
 			<div class="top-meta">Estreno destacado · <a href="{% url 'games' %}">Juegos</a></div>
 			<div class="row">
-				{% if latest_game %}
 				<div class="col-md-7">
 					<h3>Nuevo lanzamiento: "{{ latest_game.title }}" — Disponible ahora</h3>
 					<p>{{ latest_game.description|truncatechars:220 }}</p>
@@ -108,24 +108,11 @@
 								src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
 					</div>
 				</div>
-				{% else %}
-				<div class="col-md-7">
-					<h3>Nuevo lanzamiento: "Eclipse Dawn" — Disponible ahora</h3>
-					<p>Explora un mundo abierto lleno de secretos, combates tácticos y una historia inmersiva. Lee la
-						reseña
-						nuestra, descubre las mejores configuraciones y aprovecha la oferta de lanzamiento.</p>
-					<div style="margin-top:18px;">
-						<a href="{% url 'games' %}" class="site-btn" style="min-width:140px;padding:12px 18px;">Comprar
-							ahora <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
-						<a href="{% url 'review' %}" class="site-btn" style="min-width:140px;padding:12px 18px;">Leer
-							reseña <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" /></a>
-					</div>
-				</div>
-				{% endif %}
 			</div>
 		</div>
 	</div>
 </section>
 <!-- Featured section end-->
+{% endif %}
 
 {% endblock %}
