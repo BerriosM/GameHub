@@ -497,6 +497,12 @@ ol {
 	box-shadow: none;
 	-webkit-appearance: none;
 }
+.contact-form select {
+	/* make selects match text inputs visually */
+	height: 48px;
+	line-height: 1.2;
+	padding-right: 36px; /* leave space for native arrow */
+}
 
 .contact-form textarea {
 	min-height: 200px;
