@@ -10,15 +10,30 @@
     <div class="container">
         <div class="col-md-8">
             <div class="card" style="padding:20px;">
+                <style>
+                /* Image field highlight */
+                .card .image-field{background:#f4f4f4;padding:12px;border-radius:6px;margin-bottom:16px}
+                .card .image-field label{color:#333;font-weight:600}
+                .card .image-field input[type=file]{background:#fff;color:#111;padding:6px;border-radius:4px;border:1px solid rgba(0,0,0,0.08)}
+                </style>
+
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.non_field_errors }}
                     {% for field in form %}
-                        <div class="form-group">
-                            <label class="contact-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                            {{ field }}
-                            {% for error in field.errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
-                        </div>
+                        {% if field.name == 'image' %}
+                            <div class="form-group image-field">
+                                <label class="contact-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                                {{ field }}
+                                {% for error in field.errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
+                            </div>
+                        {% elif field.name != 'category' %}
+                            <div class="form-group">
+                                <label class="contact-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                                {{ field }}
+                                {% for error in field.errors %}<div class="text-danger">{{ error }}</div>{% endfor %}
+                            </div>
+                        {% endif %}
                     {% endfor %}
                     <button type="submit" class="site-btn">Guardar cambios <img src="{% static 'img/icons/double-arrow.png' %}" alt="#"/></button>
                     <a href="{% url 'profile' %}" class="site-btn" style="background:#999;margin-left:8px;">Cancelar</a>
