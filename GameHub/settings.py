@@ -31,7 +31,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://127.0.0.1:8000",
 ]
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*","GameHub.pythonanywhere.com"]
 
 # Application definition
 
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'GameHub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.gamehub_db',
     }
 }
 
